@@ -19,6 +19,7 @@
     </TextView>
 
     <Button
+        android:id="@+id/start"
         android:layout_below="@id/title"
         android:layout_width="200sp"
         android:layout_height="100sp"
