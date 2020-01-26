@@ -17,5 +17,7 @@ class MainActivity : AppCompatActivity() {
             val myIntent = Intent(this, LoginPage::class.java)
             startActivity(myIntent)
         }
+
+
     }
 }

@@ -16,5 +16,12 @@ class LoginPage : AppCompatActivity() {
             val myIntent = Intent(this, RegisterPage::class.java)
             startActivity(myIntent)
         }
+
+        var button1: Button =  findViewById(R.id.login)
+        button1.setOnClickListener(){
+
+            val myIntent = Intent(this, ContentHolder::class.java)
+            startActivity(myIntent)
+        }
     }
 }
