@@ -53,10 +53,10 @@ class HomeFragment : Fragment() {
             listener!!.onFragmentInteraction(2);
         }
 
-        var transferbutton:Button = tempInf.findViewById(R.id.transfer);
-        postbutton.setOnClickListener{
-            listener!!.onFragmentInteraction(3);
-        }
+//        var transferbutton:Button = tempInf.findViewById(R.id.transfer);
+//        postbutton.setOnClickListener{
+//            listener!!.onFragmentInteraction(15);
+//        }
 
 
         return tempInf;
