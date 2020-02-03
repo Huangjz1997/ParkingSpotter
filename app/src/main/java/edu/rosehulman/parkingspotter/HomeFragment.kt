@@ -48,6 +48,17 @@ class HomeFragment : Fragment() {
             listener!!.onFragmentInteraction(1);
         }
 
+        var postbutton:Button = tempInf.findViewById(R.id.post);
+        postbutton.setOnClickListener{
+            listener!!.onFragmentInteraction(2);
+        }
+
+        var transferbutton:Button = tempInf.findViewById(R.id.transfer);
+        postbutton.setOnClickListener{
+            listener!!.onFragmentInteraction(3);
+        }
+
+
         return tempInf;
     }
 

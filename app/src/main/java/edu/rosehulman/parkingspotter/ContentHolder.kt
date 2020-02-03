@@ -21,6 +21,11 @@ class ContentHolder : AppCompatActivity(), HomeFragment.OnFragmentInteractionLis
             ft.replace(R.id.main_content, getFragment())
             ft.commit()
         }
+        if(flag == 2){
+            val ft = supportFragmentManager.beginTransaction()
+            ft.replace(R.id.main_content, postFragment())
+            ft.commit()
+        }
     }
 
     override fun onFragmentInteraction(uri: Uri) {
