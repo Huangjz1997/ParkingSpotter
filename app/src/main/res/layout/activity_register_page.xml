@@ -21,29 +21,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="20dp"
-        >
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Username"
-            android:textSize="36sp"
-            ></TextView>
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="36sp"
-
-            android:background="#ffffff"
-            >
-
-        </EditText>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="20dp"
+        android:padding="10dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
         >
         <TextView
             android:layout_width="match_parent"
@@ -55,6 +35,31 @@
             android:layout_width="match_parent"
             android:layout_height="36sp"
             android:background="#ffffff"
+            android:id="@+id/registerusername"
+            >
+
+        </EditText>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="10dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        >
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Password"
+            android:textSize="36sp"
+            ></TextView>
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="36sp"
+            android:background="#ffffff"
+            android:id="@+id/registerpassword"
             >
         </EditText>
 
@@ -64,13 +69,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="20dp"
+        android:padding="10dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
         >
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Re-end password"
             android:textSize="36sp"
+
             ></TextView>
         <EditText
             android:layout_width="match_parent"
@@ -85,7 +93,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="20dp"
+        android:padding="10dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
         >
         <TextView
             android:layout_width="match_parent"
@@ -103,10 +113,10 @@
     </LinearLayout>
 
     <Button
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="20dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-        android:id="@+id/login"
+        android:id="@+id/registeruser"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Register"></Button>
