@@ -3,7 +3,7 @@
     android:id="@+id/fragment_home"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#000000"
+    android:background="#ffffff"
     >
 
     <TextView
@@ -22,9 +22,9 @@
         android:background="#FFFFFF"
         android:gravity="left"
         android:padding="10dp"
-        android:text="Report a free parking space!"
+        android:text="Select a parking lot and get a space number!"
         android:textColor="#000000"
-        android:textSize="30sp"
+        android:textSize="15sp"
         android:textStyle="bold"></TextView>
     <TextView
         android:layout_width="match_parent"
@@ -38,46 +38,78 @@
         ></TextView>
 
 
-    <LinearLayout
+    <Button
         android:layout_width="match_parent"
-        android:layout_margin="20dp"
-        android:layout_height= "350dp"
-        android:background="#C4C4C4"
+        android:layout_margin="50dp"
+        android:layout_height= "150dp"
+        android:background="@color/colorRose"
         android:orientation="vertical"
         android:layout_gravity="center"
         android:gravity="center"
         android:padding="3dp">
 
-        <ImageView
-            android:layout_width="350dp"
-            android:layout_height="200dp"
-            android:src="@drawable/ic_launcher_background"
-            android:layout_marginBottom="20dp"></ImageView>
+<!--        <ImageView-->
+<!--            android:layout_width="350dp"-->
+<!--            android:layout_height="200dp"-->
+<!--            android:src="@drawable/ic_launcher_background"-->
+<!--            android:layout_marginBottom="20dp"></ImageView>-->
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:layout_gravity="center"
-            android:padding="10dp">
+<!--        <RelativeLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="100dp"-->
+<!--            android:layout_gravity="center"-->
+<!--            android:padding="10dp">-->
 
+<!--            <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="match_parent"-->
+<!--                android:text="Row\nColumn"-->
+<!--                android:textSize="20sp"></TextView>-->
+
+<!--            <Button-->
+<!--                android:layout_width="120dp"-->
+<!--                android:layout_height="80dp"-->
+<!--                android:text="Report"-->
+<!--                android:textSize="20sp"-->
+<!--                android:layout_alignParentEnd="true"-->
+<!--                android:background="@color/colorRose"-->
+<!--                android:textColor="#FFFFFF"-->
+<!--                ></Button>-->
+<!--        </RelativeLayout>-->
+
+    </Button>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:layout_marginRight="50dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="35dp"
+        android:layout_marginBottom="30dp"
+        android:background="#C4C4C4"
+        android:padding="20dp"
+        >
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text="Row\nColumn"
-                android:textSize="20sp"></TextView>
-
-            <Button
-                android:layout_width="120dp"
-                android:layout_height="80dp"
-                android:text="Report"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#C4C4C4"
+            android:gravity="center"
+            android:text="Row: "
+            android:textColor="#000000"
+            android:textSize="20sp"
+            ></TextView>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#C4C4C4"
+                android:gravity="center"
+                android:text="Column: "
+                android:textColor="#000000"
                 android:textSize="20sp"
-                android:layout_alignParentEnd="true"
-                android:background="@color/colorRose"
-                android:textColor="#FFFFFF"
-                ></Button>
-        </RelativeLayout>
-
+                ></TextView>
     </LinearLayout>
+
 
     <TextView
         android:layout_width="match_parent"

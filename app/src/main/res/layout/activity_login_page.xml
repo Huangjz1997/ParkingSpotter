@@ -3,6 +3,8 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorRose"
+    android:clickable="true"
+    android:focusableInTouchMode="true"
     >
 
     <TextView
@@ -32,7 +34,7 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="36sp"
-
+            android:id="@+id/username"
             android:background="#ffffff"
             >
 
@@ -40,7 +42,7 @@
     </LinearLayout>
 
     <LinearLayout
-        android:layout_marginTop="50dp"
+
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -49,13 +51,14 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Username"
+            android:text="Password"
             android:textSize="36sp"
             ></TextView>
         <EditText
             android:layout_width="match_parent"
             android:layout_height="36sp"
             android:background="#ffffff"
+            android:id="@+id/password"
             >
         </EditText>
 
