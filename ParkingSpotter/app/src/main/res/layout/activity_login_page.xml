@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorRose"
+    android:clickable="true"
+    android:focusableInTouchMode="true"
+    >
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/title"
+        android:textSize="28sp"
+        android:background="#aaaaaa"
+        android:textColor="#ffffff"
+        android:gravity="center"
+        android:padding="10dp"
+        ></TextView>
+
+    <LinearLayout
+        android:layout_marginTop="50dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp"
+        >
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Username"
+            android:textSize="36sp"
+            ></TextView>
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="36sp"
+            android:id="@+id/username"
+            android:background="#ffffff"
+            >
+
+        </EditText>
+    </LinearLayout>
+
+    <LinearLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp"
+        >
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Password"
+            android:textSize="36sp"
+            ></TextView>
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="36sp"
+            android:background="#ffffff"
+            android:id="@+id/password"
+            >
+        </EditText>
+
+    </LinearLayout>
+
+    <Button
+        android:layout_marginTop="50dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:id="@+id/login"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Log In"></Button>
+
+    <Button
+        android:id="@+id/register"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:text="Register"
+        android:layout_gravity="right"
+        android:layout_marginTop="50dp"
+        ></Button>
+
+</LinearLayout>
