@@ -68,39 +68,40 @@
         android:src="@drawable/ic_launcher_background"
         android:layout_marginBottom="20dp"></ImageView>
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:layout_gravity="center"
-            android:padding="10dp">
+<!--        <RelativeLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="100dp"-->
+<!--            android:layout_gravity="center"-->
+<!--            android:padding="10dp">-->
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text="Row\nColumn"
-                android:textSize="20sp"></TextView>
+<!--            <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="match_parent"-->
+<!--                android:text="Row\nColumn"-->
+<!--                android:textSize="20sp"></TextView>-->
 
-            <Button
+<!--            <Button-->
 
-                android:layout_width="120dp"
-                android:layout_height="80dp"
-                android:text="Report"
-                android:textSize="20sp"
-                android:layout_alignParentEnd="true"
-                android:background="@color/colorRose"
-                android:textColor="#FFFFFF"
-                ></Button>
-        </RelativeLayout>
+<!--                android:layout_width="120dp"-->
+<!--                android:layout_height="80dp"-->
+<!--                android:text="Report"-->
+<!--                android:textSize="20sp"-->
+<!--                android:layout_alignParentEnd="true"-->
+<!--                android:background="@color/colorRose"-->
+<!--                android:textColor="#FFFFFF"-->
+<!--                ></Button>-->
+<!--        </RelativeLayout>-->
 
     </LinearLayout>
 
     <TextView
+        android:id="@+id/post_token"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#C4C4C4"
         android:gravity="center"
         android:padding="10dp"
-        android:text="My current tokens: 16"
+        android:text="My current tokens:"
         android:textColor="#000000"
         android:textSize="20sp"
         ></TextView>

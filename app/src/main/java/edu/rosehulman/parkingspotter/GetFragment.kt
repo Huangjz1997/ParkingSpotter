@@ -12,6 +12,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import androidx.fragment.app.Fragment
+import com.google.firebase.firestore.*
+import kotlinx.android.synthetic.main.fragment_get.view.*
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -32,6 +34,29 @@ class getFragment : Fragment(){
     private var param2: String? = null
     private var listener: OnFragmentInteractionListener? = null
     private var tempSelection: Int = 0
+
+    private val tokenRef = FirebaseFirestore.getInstance().collection("Tokens")
+    private var tokenList = ArrayList<Token>()
+    private var size = 0
+    init{
+        tokenRef.addSnapshotListener{ snapshot: QuerySnapshot?, exception: FirebaseFirestoreException? ->
+//            size = snapshot!!.size()
+            if(exception != null){
+
+            }
+            for (docChange in snapshot!!.documentChanges){
+                val token = Token.fromSnapshot(docChange.document)
+                when(docChange.type){
+                    DocumentChange.Type.ADDED -> {
+                        tokenList.add(0,token)
+                    }
+
+                }
+            }
+        }
+
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -51,10 +76,9 @@ class getFragment : Fragment(){
         var selectButton = view.findViewById<Button>(R.id.selectLotButton)
 
         selectButton.setOnClickListener{
-//            val listItems = arrayOf("Speed Side","Speed Main", "Precopo Main", "SRC Main","SRC Back")
             val dialogBuilder = AlertDialog.Builder(this.context)
-            dialogBuilder.setTitle("Hi")
-            dialogBuilder.setMessage("Select the parking lot")
+            dialogBuilder.setTitle("Hi,")
+            dialogBuilder.setMessage("Select the parking lot:")
             dialogBuilder.setCancelable(false)
             val dialogView = LayoutInflater.from(this.context).inflate(R.layout.dialog_choose,null,false)
             dialogBuilder.setView(dialogView)
@@ -75,15 +99,15 @@ class getFragment : Fragment(){
             }
             dialogBuilder.create().show()
 
+        }
 
+        tokenRef.get().addOnCompleteListener{ task ->
+            if(task.isSuccessful){
+                view.post_token.setText("My current tokens: ".plus(task.result!!.size().toString()))
+            }
         }
 
 
-
-//        var speedMain = view.findViewById<Button>(R.id.speedMain)
-//        var percopoMain = view.findViewById<Button>(R.id.percopoMain)
-//        var srcMain = view.findViewById<Button>(R.id.srcMain)
-//        var srcBack = view.findViewById<Button>(R.id.srcBack)
 
          return view
     }

@@ -61,7 +61,6 @@ class LoginPage : AppCompatActivity() {
     fun login(username:String, password: String){
         auth.signInWithEmailAndPassword(username, password).addOnSuccessListener {
             val myIntent = Intent(this, ContentHolder::class.java)
-//            myIntent.putExtra("auth", auth);
             startActivity(myIntent)
         }.addOnFailureListener{
             Toast.makeText(this,"Wrong email/password combination!", Toast.LENGTH_SHORT).show()
