@@ -11,14 +11,14 @@
         >
 
         <EditText
-            android:layout_width="wrap_content"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:textSize="24sp"
             android:hint="row number"
             android:inputType="number"
             android:id="@+id/report_row"></EditText>
         <EditText
-            android:layout_width="wrap_content"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:textSize="24sp"
             android:hint="column number"

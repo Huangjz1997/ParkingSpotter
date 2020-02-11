@@ -43,6 +43,8 @@ class speedSideFragment : Fragment() {
 
     private val spotRef = FirebaseFirestore.getInstance().collection("SpeedSide")
     private val tokenRef = FirebaseFirestore.getInstance().collection("Tokens")
+    private val numRef = FirebaseFirestore.getInstance().collection("Tokens").whereEqualTo("uid",uid)
+
     private var tokenList = ArrayList<Token>()
     init {
         spotRef.addSnapshotListener{ snapshot: QuerySnapshot? , exception: FirebaseFirestoreException? ->
@@ -70,8 +72,7 @@ class speedSideFragment : Fragment() {
                 }
             }
         }
-
-    }
+     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -105,6 +106,11 @@ class speedSideFragment : Fragment() {
                 val row =  dialogView.report_row.text.toString().toInt()
                 val col = dialogView.report_column.text.toString().toInt()
                 updateReport(row,col);
+                tokenRef.get().addOnCompleteListener{ task ->
+                    if(task.isSuccessful){
+                        view.speedside_token.setText("My current tokens: ".plus(task.result!!.size().toString()))
+                    }
+                }
             }
             dialogBuilder.create().show()
         }
@@ -124,6 +130,8 @@ class speedSideFragment : Fragment() {
         spotRef.add(Spot(row.toString(),col.toString()))
         tokenRef.add(Token(uid!!))
         tokenList.add(Token(uid!!))
+
+
 
     }
 
