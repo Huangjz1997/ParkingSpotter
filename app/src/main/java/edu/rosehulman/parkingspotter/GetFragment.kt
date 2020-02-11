@@ -12,12 +12,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import androidx.fragment.app.Fragment
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.*
 import kotlinx.android.synthetic.main.fragment_get.view.*
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
+private const val ARG_UID = "uid"
 private const val ARG_PARAM2 = "param2"
 
 /**
@@ -29,7 +30,7 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  */
 class getFragment : Fragment(){
-    // TODO: Rename and change types of parameters
+
     private var param1: String? = null
     private var param2: String? = null
     private var listener: OnFragmentInteractionListener? = null
@@ -37,12 +38,17 @@ class getFragment : Fragment(){
 
     private val tokenRef = FirebaseFirestore.getInstance().collection("Tokens")
     private var tokenList = ArrayList<Token>()
-    private var size = 0
-    init{
-        tokenRef.addSnapshotListener{ snapshot: QuerySnapshot?, exception: FirebaseFirestoreException? ->
-//            size = snapshot!!.size()
-            if(exception != null){
+    lateinit var authListener: FirebaseAuth.AuthStateListener
+    lateinit var uid : String
 
+    init{
+        authListener = FirebaseAuth.AuthStateListener { auth: FirebaseAuth ->
+            val user = auth.currentUser
+            uid = user!!.uid
+        }
+
+        tokenRef.addSnapshotListener{ snapshot: QuerySnapshot?, exception: FirebaseFirestoreException? ->
+            if(exception != null){
             }
             for (docChange in snapshot!!.documentChanges){
                 val token = Token.fromSnapshot(docChange.document)
@@ -50,7 +56,6 @@ class getFragment : Fragment(){
                     DocumentChange.Type.ADDED -> {
                         tokenList.add(0,token)
                     }
-
                 }
             }
         }
@@ -60,8 +65,7 @@ class getFragment : Fragment(){
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+            uid = it.getString(ARG_UID)!!
         }
 
     }
@@ -94,7 +98,7 @@ class getFragment : Fragment(){
             }
             dialogBuilder.setPositiveButton("Select"){_,_ ->
                 if(tempSelection == 11) {
-                    listener!!.onFragmentInteraction(11)
+                    listener!!.onFragmentInteraction(11, uid)
                 }
             }
             dialogBuilder.create().show()
@@ -108,13 +112,12 @@ class getFragment : Fragment(){
         }
 
 
-
          return view
     }
 
     // TODO: Rename method, update argument and hook method into UI event
-    fun onButtonPressed(uri: Int) {
-        listener?.onFragmentInteraction(uri)
+    fun onButtonPressed(num: Int, uid: String) {
+        listener?.onFragmentInteraction(num, uid)
     }
 
     override fun onAttach(context: Context) {
@@ -144,7 +147,7 @@ class getFragment : Fragment(){
      */
     interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
-        fun onFragmentInteraction(num: Int)
+        fun onFragmentInteraction(num: Int, uid: String)
     }
 
     companion object {
@@ -158,11 +161,10 @@ class getFragment : Fragment(){
          */
         // TODO: Rename and change types and number of parameters
         @JvmStatic
-        fun newInstance(param1: String, param2: String) =
+        fun newInstance(uid: String) =
             getFragment().apply {
                 arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+                    putString("uid", uid)
                 }
             }
     }

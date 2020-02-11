@@ -14,33 +14,34 @@ class ContentHolder : AppCompatActivity(), HomeFragment.OnFragmentInteractionLis
     getFragment.OnFragmentInteractionListener, postFragment.OnFragmentInteractionListener, speedSideFragment.OnFragmentInteractionListener
 
 {
-    val auth = FirebaseAuth.getInstance()
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_content_holder)
-        val ft = supportFragmentManager.beginTransaction()
-        ft.replace(R.id.main_content, HomeFragment())
-        ft.commit()
-    }
+//    private var uid = intent.getStringExtra("uid")
 
-    override fun onFragmentInteraction(flag: Int) {
-
+    override fun onFragmentInteraction(flag: Int, uid: String) {
         if(flag == 1) {
             val ft = supportFragmentManager.beginTransaction()
             ft.replace(R.id.main_content, getFragment())
             ft.commit()
         }else if(flag == 2){
-
             val ft = supportFragmentManager.beginTransaction()
             ft.replace(R.id.main_content, postFragment())
             ft.commit()
         }
         else if(flag == 11){
-
             val ft = supportFragmentManager.beginTransaction()
-            ft.replace(R.id.main_content, speedSideFragment())
+            ft.replace(R.id.main_content, speedSideFragment.newInstance(uid))
             ft.commit()
         }
+    }
+
+    val auth = FirebaseAuth.getInstance()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_content_holder)
+        val i : Intent = getIntent()
+        val ft = supportFragmentManager.beginTransaction()
+        ft.replace(R.id.main_content, HomeFragment.newInstance(i.getStringExtra("uid")))
+        ft.commit()
     }
 
     override fun onFragmentInteraction(uri: Uri) {

@@ -36,55 +36,48 @@ private const val ARG_PARAM2 = "param2"
  */
 class speedSideFragment : Fragment() {
     // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+    private var uid: String? = null
+//    private var param2: String? = null
     private var listener: OnFragmentInteractionListener? = null
     private var spotList = ArrayList<Spot>()
 
     private val spotRef = FirebaseFirestore.getInstance().collection("SpeedSide")
-
-//    override fun getItemCount() = spotList.size
+    private val tokenRef = FirebaseFirestore.getInstance().collection("Tokens")
+    private var tokenList = ArrayList<Token>()
 
     init {
         spotRef.addSnapshotListener{ snapshot: QuerySnapshot? , exception: FirebaseFirestoreException? ->
            if(exception != null){
-
            }
             for (docChange in snapshot!!.documentChanges){
                val spot = Spot.fromSnapshot(docChange.document)
                 when(docChange.type){
-
                     DocumentChange.Type.ADDED -> {
                         spotList.add(0, spot)
                     }
-//                    DocumentChange.Type.REMOVED -> {
-//                        for((pos, mq) in movieQuotes.withIndex()){
-//                            if(mq.id == movieQuote.id){
-//                                movieQuotes.remove(mq)
-//                                notifyItemRemoved(pos)
-//                                break
-//                            }
-//                        }
-//                    }
-                    /*DocumentChange.Type.MODIFIED -> {
-                        for((pos, mq) in movieQuotes.withIndex()){
-                            if(mq.id == movieQuote.id){
-                                movieQuotes[pos] = movieQuote
-                                notifyItemChanged(pos)
-                                break
-                            }
-                        }
-                    }*/
                 }
             }
         }
+
+        tokenRef.addSnapshotListener{ snapshot: QuerySnapshot? , exception: FirebaseFirestoreException? ->
+            if(exception != null){
+            }
+            for (docChange in snapshot!!.documentChanges){
+                val token = Token.fromSnapshot(docChange.document)
+                when(docChange.type){
+                    DocumentChange.Type.ADDED -> {
+                        tokenList.add(0, token)
+                    }
+                }
+            }
+        }
+
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+            uid = it.getString(ARG_PARAM1)
         }
     }
 
@@ -129,7 +122,7 @@ class speedSideFragment : Fragment() {
         rownum.text = rownum.text.toString().plus(row.toString())
         colnum.text = colnum.text.toString().plus(col.toString())
         spotList.add(Spot(row.toString(),col.toString()))
-        spotRef.add(Spot(row.toString(),col.toString()))
+//        spotRef.add(Spot(row.toString(),col.toString()))
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -178,11 +171,10 @@ class speedSideFragment : Fragment() {
          */
         // TODO: Rename and change types and number of parameters
         @JvmStatic
-        fun newInstance(param1: String, param2: String) =
+        fun newInstance(uid: String) =
             speedSideFragment().apply {
                 arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+                    putString(ARG_PARAM1, uid)
                 }
             }
     }

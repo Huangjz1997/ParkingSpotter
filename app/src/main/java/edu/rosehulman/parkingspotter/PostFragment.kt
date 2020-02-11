@@ -13,6 +13,7 @@ import com.google.firebase.firestore.DocumentChange
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.FirebaseFirestoreException
 import com.google.firebase.firestore.QuerySnapshot
+import kotlinx.android.synthetic.main.fragment_get.view.*
 import kotlinx.android.synthetic.main.fragment_post.view.*
 import kotlin.random.Random
 import kotlin.random.Random.Default.nextInt
@@ -38,7 +39,7 @@ class postFragment : Fragment() {
 
     private var spotList = ArrayList<Spot>()
     private val spotRef = FirebaseFirestore.getInstance().collection("SpeedSide")
-
+    private val tokenRef = FirebaseFirestore.getInstance().collection("Tokens")
     init {
         spotRef.addSnapshotListener{ snapshot: QuerySnapshot?, exception: FirebaseFirestoreException? ->
             if(exception != null){
@@ -52,24 +53,6 @@ class postFragment : Fragment() {
                         spotList.add(0, spot)
 
                     }
-//                    DocumentChange.Type.REMOVED -> {
-//                        for((pos, mq) in movieQuotes.withIndex()){
-//                            if(mq.id == movieQuote.id){
-//                                movieQuotes.remove(mq)
-//                                notifyItemRemoved(pos)
-//                                break
-//                            }
-//                        }
-//                    }
-                    /*DocumentChange.Type.MODIFIED -> {
-                        for((pos, mq) in movieQuotes.withIndex()){
-                            if(mq.id == movieQuote.id){
-                                movieQuotes[pos] = movieQuote
-                                notifyItemChanged(pos)
-                                break
-                            }
-                        }
-                    }*/
                 }
             }
         }
@@ -119,6 +102,12 @@ class postFragment : Fragment() {
 
 
         }
+        tokenRef.get().addOnCompleteListener{ task ->
+            if(task.isSuccessful){
+                view.get_token.setText("My current tokens: ".plus(task.result!!.size().toString()))
+            }
+        }
+
         return view
     }
 

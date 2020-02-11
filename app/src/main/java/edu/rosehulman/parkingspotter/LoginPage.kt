@@ -21,12 +21,12 @@ class LoginPage : AppCompatActivity() {
         authListener = FirebaseAuth.AuthStateListener { auth: FirebaseAuth ->
             val user = auth.currentUser
             if (user == null) {
-//                val myIntent = Intent(this, LoginPage::class.java)
-//                startActivity(myIntent)
+
             }
             else {
                 uid = user.uid
                 val myIntent = Intent(this, ContentHolder::class.java)
+                myIntent.putExtra("uid", user.uid);
                 startActivity(myIntent)
             }
         }
