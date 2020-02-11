@@ -9,6 +9,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
+import kotlinx.android.synthetic.main.fragment_get.view.*
+import kotlinx.android.synthetic.main.fragment_home.view.*
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -24,7 +27,7 @@ private const val ARG_UID = "uid"
  * create an instance of this fragment.
  */
 class HomeFragment : Fragment() {
-
+    private val tokenRef = FirebaseFirestore.getInstance().collection("Tokens")
     private var listener: OnFragmentInteractionListener? = null
     private var uid : String = ""
 
@@ -52,6 +55,12 @@ class HomeFragment : Fragment() {
         var postbutton:Button = view.findViewById(R.id.post);
         postbutton.setOnClickListener{
             listener!!.onFragmentInteraction(2);
+        }
+
+        tokenRef.get().addOnCompleteListener{ task ->
+            if(task.isSuccessful){
+                view.home_token.setText("My current tokens: ".plus(task.result!!.size().toString()))
+            }
         }
 
         return view;

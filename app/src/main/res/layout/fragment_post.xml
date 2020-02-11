@@ -37,11 +37,20 @@
         android:padding="10dp"
         ></TextView>
 
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:id="@+id/selectGetButton"
+        android:text="Select Parking Lot"
+        android:background="@color/colorRose"
+        android:textColor="#ffffff"
+        android:textSize="20dp"
+        />
 
     <Button
         android:layout_width="match_parent"
         android:layout_margin="50dp"
-        android:layout_height= "150dp"
+        android:layout_height= "100dp"
         android:background="@color/colorRose"
         android:orientation="vertical"
         android:layout_gravity="center"

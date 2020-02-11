@@ -35,6 +35,7 @@ class postFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var uid: String? = null
     private var listener: OnFragmentInteractionListener? = null
+    private var parkLotName: String? = "None"
 
     private var spotList = ArrayList<Spot>()
     private val spotRef = FirebaseFirestore.getInstance().collection("SpeedSide")
@@ -73,31 +74,43 @@ class postFragment : Fragment() {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_post, container, false)
         var getButton = view.findViewById<Button>(R.id.getbut)
+        var selectButton = view.findViewById<Button>(R.id.selectGetButton)
+
+        selectButton.setOnClickListener{
+            val builder = androidx.appcompat.app.AlertDialog.Builder(this.context!!)
+            builder.setItems(
+                    resources.getStringArray(R.array.parklot_array))
+            { _, which ->
+                parkLotName = when (which) {
+                    0 -> "SpeedSide"
+                    1 -> "Speed Main"
+                    2 -> "Precopo Main"
+                    3 -> "SRC Main"
+                    4 -> "SRC Back"
+                    else -> "None"
+                }
+            }
+            builder.create().show()
+        }
 
         getButton.setOnClickListener {
-//
-//            val dialogBuilder = AlertDialog.Builder(this.context)
-//            dialogBuilder.setTitle("Hi")
-//            dialogBuilder.setMessage("Report this spot!")
-//            dialogBuilder.setCancelable(false)
-//            val dialogView = LayoutInflater.from(this.context).inflate(R.layout.report, null, false)
-//            dialogBuilder.setView(dialogView)
-//
-//            dialogBuilder.setNeutralButton("Cancel") { dialog, which ->
-//                dialog.cancel()
-//            }
-//
-            //!!!!!!!!!!!!!!!!!!!!!!!!!
-
-            val tempSpot = spotList.get(nextInt(0,5));
-            val tempRow = "Row: "
-            val tempCol = "Column: "
-            val tempString = "\n ParkingLot \n SpeedSide"
 
 
-            view.post_row.setText(tempRow.plus(tempSpot.row))
-            view.post_column.setText(tempRow.plus(tempSpot.column).plus(tempString))
+            if (parkLotName === "None"){
+                val builder = androidx.appcompat.app.AlertDialog.Builder(this.context!!)
+                builder.setTitle("Please select parking lot first!")
+                builder.create().show()
 
+            }else{
+
+                val tempSpot = spotList.get(nextInt(0,4));
+                val tempRow = "Row: "
+                val tempCol = "Column: "
+                val tempString = "\n ParkingLot \n SpeedSide"
+
+                view.post_row.setText(tempRow.plus(tempSpot.row))
+                view.post_column.setText(tempRow.plus(tempSpot.column).plus(tempString))
+            }
 
 
         }
@@ -163,4 +176,8 @@ class postFragment : Fragment() {
                 }
             }
     }
+
+
+
+
 }
