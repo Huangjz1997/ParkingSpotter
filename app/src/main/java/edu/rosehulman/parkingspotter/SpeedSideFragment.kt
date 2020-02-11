@@ -55,8 +55,8 @@ class speedSideFragment : Fragment() {
                 when(docChange.type){
 
                     DocumentChange.Type.ADDED -> {
-                        spotList.add(2, spot)
-
+                        spotList.add(0, spot)
+                        
                     }
 //                    DocumentChange.Type.REMOVED -> {
 //                        for((pos, mq) in movieQuotes.withIndex()){
