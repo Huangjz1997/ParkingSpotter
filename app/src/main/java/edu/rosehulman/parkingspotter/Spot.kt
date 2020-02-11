@@ -3,8 +3,9 @@ package edu.rosehulman.parkingspotter
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.Exclude
 
-data class Spot
-(var column: String = " " , var row: String = " ", var uid : String = " "){
+class Spot
+
+constructor(var column: String = " " , var row: String = " ", var uid : String = " "){
     @get: Exclude
     var id = ""
 

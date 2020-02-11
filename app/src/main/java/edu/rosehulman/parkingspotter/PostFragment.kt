@@ -1,5 +1,6 @@
 package edu.rosehulman.parkingspotter
 
+import android.app.AlertDialog
 import android.content.Context
 import android.net.Uri
 import android.os.Bundle
@@ -7,6 +8,14 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import com.google.firebase.firestore.DocumentChange
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.FirebaseFirestoreException
+import com.google.firebase.firestore.QuerySnapshot
+import kotlinx.android.synthetic.main.fragment_post.view.*
+import kotlin.random.Random
+import kotlin.random.Random.Default.nextInt
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -27,6 +36,46 @@ class postFragment : Fragment() {
     private var param2: String? = null
     private var listener: OnFragmentInteractionListener? = null
 
+    private var spotList = ArrayList<Spot>()
+    private val spotRef = FirebaseFirestore.getInstance().collection("SpeedSide")
+
+    init {
+        spotRef.addSnapshotListener{ snapshot: QuerySnapshot?, exception: FirebaseFirestoreException? ->
+            if(exception != null){
+
+            }
+            for (docChange in snapshot!!.documentChanges){
+                val spot = Spot.fromSnapshot(docChange.document)
+                when(docChange.type){
+
+                    DocumentChange.Type.ADDED -> {
+                        spotList.add(0, spot)
+
+                    }
+//                    DocumentChange.Type.REMOVED -> {
+//                        for((pos, mq) in movieQuotes.withIndex()){
+//                            if(mq.id == movieQuote.id){
+//                                movieQuotes.remove(mq)
+//                                notifyItemRemoved(pos)
+//                                break
+//                            }
+//                        }
+//                    }
+                    /*DocumentChange.Type.MODIFIED -> {
+                        for((pos, mq) in movieQuotes.withIndex()){
+                            if(mq.id == movieQuote.id){
+                                movieQuotes[pos] = movieQuote
+                                notifyItemChanged(pos)
+                                break
+                            }
+                        }
+                    }*/
+                }
+            }
+        }
+    }
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -40,7 +89,37 @@ class postFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_post, container, false)
+        val view = inflater.inflate(R.layout.fragment_post, container, false)
+        var getButton = view.findViewById<Button>(R.id.getbut)
+
+        getButton.setOnClickListener {
+//
+//            val dialogBuilder = AlertDialog.Builder(this.context)
+//            dialogBuilder.setTitle("Hi")
+//            dialogBuilder.setMessage("Report this spot!")
+//            dialogBuilder.setCancelable(false)
+//            val dialogView = LayoutInflater.from(this.context).inflate(R.layout.report, null, false)
+//            dialogBuilder.setView(dialogView)
+//
+//            dialogBuilder.setNeutralButton("Cancel") { dialog, which ->
+//                dialog.cancel()
+//            }
+//
+            //!!!!!!!!!!!!!!!!!!!!!!!!!
+
+            val tempSpot = spotList.get(nextInt(0,5));
+            val tempRow = "Row: "
+            val tempCol = "Column: "
+            val tempString = "\n ParkingLot \n SpeedSide"
+
+
+            view.post_row.setText(tempRow.plus(tempSpot.row))
+            view.post_column.setText(tempRow.plus(tempSpot.column).plus(tempString))
+
+
+
+        }
+        return view
     }
 
     // TODO: Rename method, update argument and hook method into UI event
