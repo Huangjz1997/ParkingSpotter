@@ -19,7 +19,6 @@ import kotlinx.android.synthetic.main.fragment_get.view.*
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val ARG_UID = "uid"
-private const val ARG_PARAM2 = "param2"
 
 /**
  * A simple [Fragment] subclass.
@@ -31,22 +30,14 @@ private const val ARG_PARAM2 = "param2"
  */
 class getFragment : Fragment(){
 
-    private var param1: String? = null
-    private var param2: String? = null
     private var listener: OnFragmentInteractionListener? = null
     private var tempSelection: Int = 0
-
-    private val tokenRef = FirebaseFirestore.getInstance().collection("Tokens")
     private var tokenList = ArrayList<Token>()
-    lateinit var authListener: FirebaseAuth.AuthStateListener
-    lateinit var uid : String
+
+    private var uid : String? = null
+    private val tokenRef = FirebaseFirestore.getInstance().collection("Tokens")
 
     init{
-        authListener = FirebaseAuth.AuthStateListener { auth: FirebaseAuth ->
-            val user = auth.currentUser
-            uid = user!!.uid
-        }
-
         tokenRef.addSnapshotListener{ snapshot: QuerySnapshot?, exception: FirebaseFirestoreException? ->
             if(exception != null){
             }
@@ -75,7 +66,7 @@ class getFragment : Fragment(){
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
+
         var view = inflater.inflate(R.layout.fragment_get,container,false)
         var selectButton = view.findViewById<Button>(R.id.selectLotButton)
 
@@ -98,7 +89,7 @@ class getFragment : Fragment(){
             }
             dialogBuilder.setPositiveButton("Select"){_,_ ->
                 if(tempSelection == 11) {
-                    listener!!.onFragmentInteraction(11, uid)
+                    listener!!.onFragmentInteraction(11)
                 }
             }
             dialogBuilder.create().show()
@@ -116,8 +107,8 @@ class getFragment : Fragment(){
     }
 
     // TODO: Rename method, update argument and hook method into UI event
-    fun onButtonPressed(num: Int, uid: String) {
-        listener?.onFragmentInteraction(num, uid)
+    fun onButtonPressed(flag: Int) {
+        listener?.onFragmentInteraction(flag)
     }
 
     override fun onAttach(context: Context) {
@@ -147,7 +138,7 @@ class getFragment : Fragment(){
      */
     interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
-        fun onFragmentInteraction(num: Int, uid: String)
+        fun onFragmentInteraction(flag: Int)
     }
 
     companion object {
@@ -164,7 +155,7 @@ class getFragment : Fragment(){
         fun newInstance(uid: String) =
             getFragment().apply {
                 arguments = Bundle().apply {
-                    putString("uid", uid)
+                    putString(ARG_UID, uid)
                 }
             }
     }

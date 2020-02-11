@@ -14,16 +14,17 @@ class ContentHolder : AppCompatActivity(), HomeFragment.OnFragmentInteractionLis
     getFragment.OnFragmentInteractionListener, postFragment.OnFragmentInteractionListener, speedSideFragment.OnFragmentInteractionListener
 
 {
-//    private var uid = intent.getStringExtra("uid")
+    lateinit var uid : String
+    val auth = FirebaseAuth.getInstance()
 
-    override fun onFragmentInteraction(flag: Int, uid: String) {
+    override fun onFragmentInteraction(flag: Int) {
         if(flag == 1) {
             val ft = supportFragmentManager.beginTransaction()
-            ft.replace(R.id.main_content, getFragment())
+            ft.replace(R.id.main_content, getFragment.newInstance(uid))
             ft.commit()
         }else if(flag == 2){
             val ft = supportFragmentManager.beginTransaction()
-            ft.replace(R.id.main_content, postFragment())
+            ft.replace(R.id.main_content, postFragment.newInstance(uid))
             ft.commit()
         }
         else if(flag == 11){
@@ -33,20 +34,13 @@ class ContentHolder : AppCompatActivity(), HomeFragment.OnFragmentInteractionLis
         }
     }
 
-    val auth = FirebaseAuth.getInstance()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_content_holder)
-        val i : Intent = getIntent()
-        val ft = supportFragmentManager.beginTransaction()
-        ft.replace(R.id.main_content, HomeFragment.newInstance(i.getStringExtra("uid")))
-        ft.commit()
-    }
+        uid = getIntent().getStringExtra("uid")
 
-    override fun onFragmentInteraction(uri: Uri) {
         val ft = supportFragmentManager.beginTransaction()
-        ft.replace(R.id.main_content, postFragment())
+        ft.replace(R.id.main_content, HomeFragment.newInstance(uid))
         ft.commit()
     }
 

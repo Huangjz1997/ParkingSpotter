@@ -13,7 +13,7 @@ import com.google.firebase.auth.FirebaseAuth
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val ARG_UID = "uid"
-private const val ARG_PARAM2 = "param2"
+
 
 /**
  * A simple [Fragment] subclass.
@@ -24,9 +24,7 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  */
 class HomeFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+
     private var listener: OnFragmentInteractionListener? = null
     private var uid : String = ""
 
@@ -37,10 +35,8 @@ class HomeFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            uid = it.getString("uid")!!
+            uid = it.getString(ARG_UID)!!
         }
-
-
     }
 
     override fun onCreateView(
@@ -51,11 +47,11 @@ class HomeFragment : Fragment() {
         var view =  inflater.inflate(R.layout.fragment_home, container, false)
         var getbutton:Button = view.findViewById(R.id.get);
         getbutton.setOnClickListener{
-            listener!!.onFragmentInteraction(1, uid);
+            listener!!.onFragmentInteraction(1);
         }
         var postbutton:Button = view.findViewById(R.id.post);
         postbutton.setOnClickListener{
-            listener!!.onFragmentInteraction(2, uid);
+            listener!!.onFragmentInteraction(2);
         }
 
         return view;
@@ -89,8 +85,8 @@ class HomeFragment : Fragment() {
      * for more information.
      */
     interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        fun onFragmentInteraction(int: Int, uid: String);
+
+        fun onFragmentInteraction(flag: Int);
     }
 
     companion object {
@@ -98,8 +94,6 @@ class HomeFragment : Fragment() {
          * Use this factory method to create a new instance of
          * this fragment using the provided parameters.
          *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
          * @return A new instance of fragment HomeFragment.
          */
         // TODO: Rename and change types and number of parameters
@@ -107,7 +101,7 @@ class HomeFragment : Fragment() {
         fun newInstance(uid: String) =
             HomeFragment().apply {
                 arguments = Bundle().apply {
-                    putString("uid", uid)
+                    putString(ARG_UID, uid)
                 }
             }
     }

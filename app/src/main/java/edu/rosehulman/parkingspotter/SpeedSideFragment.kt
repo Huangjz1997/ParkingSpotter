@@ -17,6 +17,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.*
 import com.google.firebase.firestore.FirebaseFirestoreException
 import com.google.firebase.firestore.QuerySnapshot
+import kotlinx.android.synthetic.main.fragment_get.view.*
 import kotlinx.android.synthetic.main.fragment_speed_side.*
 import kotlinx.android.synthetic.main.fragment_speed_side.view.*
 import kotlinx.android.synthetic.main.report.view.*
@@ -37,14 +38,12 @@ private const val ARG_PARAM2 = "param2"
 class speedSideFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var uid: String? = null
-//    private var param2: String? = null
     private var listener: OnFragmentInteractionListener? = null
     private var spotList = ArrayList<Spot>()
 
     private val spotRef = FirebaseFirestore.getInstance().collection("SpeedSide")
     private val tokenRef = FirebaseFirestore.getInstance().collection("Tokens")
     private var tokenList = ArrayList<Token>()
-
     init {
         spotRef.addSnapshotListener{ snapshot: QuerySnapshot? , exception: FirebaseFirestoreException? ->
            if(exception != null){
@@ -102,18 +101,18 @@ class speedSideFragment : Fragment() {
                 dialog.cancel()
             }
 
-
             dialogBuilder.setPositiveButton("Report"){_,_ ->
                 val row =  dialogView.report_row.text.toString().toInt()
                 val col = dialogView.report_column.text.toString().toInt()
                 updateReport(row,col);
             }
-
             dialogBuilder.create().show()
-
-
         }
-
+        tokenRef.get().addOnCompleteListener{ task ->
+            if(task.isSuccessful){
+                view.speedside_token.setText("My current tokens: ".plus(task.result!!.size().toString()))
+            }
+        }
 
         return view
     }
@@ -122,12 +121,15 @@ class speedSideFragment : Fragment() {
         rownum.text = rownum.text.toString().plus(row.toString())
         colnum.text = colnum.text.toString().plus(col.toString())
         spotList.add(Spot(row.toString(),col.toString()))
-//        spotRef.add(Spot(row.toString(),col.toString()))
+        spotRef.add(Spot(row.toString(),col.toString()))
+        tokenRef.add(Token(uid!!))
+        tokenList.add(Token(uid!!))
+
     }
 
     // TODO: Rename method, update argument and hook method into UI event
-    fun onButtonPressed(uri: Uri) {
-        listener?.onFragmentInteraction(uri)
+    fun onButtonPressed(flag: Int) {
+        listener?.onFragmentInteraction(flag)
     }
 
     override fun onAttach(context: Context) {
@@ -135,7 +137,7 @@ class speedSideFragment : Fragment() {
         if (context is OnFragmentInteractionListener) {
             listener = context
         } else {
-//            throw RuntimeException(message = context.toString() + " must implement OnFragmentInteractionListener")
+            throw RuntimeException(context.toString() + " must implement OnFragmentInteractionListener")
         }
     }
 
@@ -157,7 +159,7 @@ class speedSideFragment : Fragment() {
      */
     interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
-        fun onFragmentInteraction(uri: Uri)
+        fun onFragmentInteraction(flag: Int)
     }
 
     companion object {

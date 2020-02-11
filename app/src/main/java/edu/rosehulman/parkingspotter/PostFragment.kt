@@ -20,8 +20,8 @@ import kotlin.random.Random.Default.nextInt
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+private const val ARG_UID = "uid"
+
 
 /**
  * A simple [Fragment] subclass.
@@ -33,13 +33,13 @@ private const val ARG_PARAM2 = "param2"
  */
 class postFragment : Fragment() {
     // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+    private var uid: String? = null
     private var listener: OnFragmentInteractionListener? = null
 
     private var spotList = ArrayList<Spot>()
     private val spotRef = FirebaseFirestore.getInstance().collection("SpeedSide")
     private val tokenRef = FirebaseFirestore.getInstance().collection("Tokens")
+
     init {
         spotRef.addSnapshotListener{ snapshot: QuerySnapshot?, exception: FirebaseFirestoreException? ->
             if(exception != null){
@@ -62,8 +62,7 @@ class postFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+            uid = it.getString(ARG_UID)
         }
     }
 
@@ -112,8 +111,8 @@ class postFragment : Fragment() {
     }
 
     // TODO: Rename method, update argument and hook method into UI event
-    fun onButtonPressed(uri: Uri) {
-        listener?.onFragmentInteraction(uri)
+    fun onButtonPressed(flag: Int) {
+        listener?.onFragmentInteraction(flag)
     }
 
     override fun onAttach(context: Context) {
@@ -143,7 +142,7 @@ class postFragment : Fragment() {
      */
     interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
-        fun onFragmentInteraction(uri: Uri)
+        fun onFragmentInteraction(flag: Int)
     }
 
     companion object {
@@ -157,11 +156,10 @@ class postFragment : Fragment() {
          */
         // TODO: Rename and change types and number of parameters
         @JvmStatic
-        fun newInstance(param1: String, param2: String) =
+        fun newInstance(uid: String) =
             postFragment().apply {
                 arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+                    putString("uid", uid)
                 }
             }
     }
