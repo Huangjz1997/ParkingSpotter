@@ -1,9 +1,7 @@
 package edu.rosehulman.parkingspotter
 
 import android.annotation.SuppressLint
-import android.app.AlertDialog
 import android.content.Context
-import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -20,12 +18,12 @@ private const val ARG_UID = "uid"
 /**
  * A simple [Fragment] subclass.
  * Activities that contain this fragment must implement the
- * [getFragment.OnFragmentInteractionListener] interface
+ * [PostFragment.OnFragmentInteractionListener] interface
  * to handle interaction events.
- * Use the [getFragment.newInstance] factory method to
+ * Use the [PostFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class getFragment : Fragment(){
+class PostFragment : Fragment(){
 
     private var listener: OnFragmentInteractionListener? = null
     private var tempSelection: Int = 0
@@ -65,35 +63,46 @@ class getFragment : Fragment(){
     ): View? {
 
         var view = inflater.inflate(R.layout.fragment_post,container,false)
+
+
         var selectButton = view.findViewById<Button>(R.id.selectLotButton)
 
         selectButton.setOnClickListener{
-            val dialogBuilder = AlertDialog.Builder(this.context)
-            dialogBuilder.setTitle("Hi,")
-            dialogBuilder.setMessage("Select the parking lot:")
-            dialogBuilder.setCancelable(false)
-            val dialogView = LayoutInflater.from(this.context).inflate(R.layout.dialog_choose,null,false)
-            dialogBuilder.setView(dialogView)
-
-            dialogBuilder.setNeutralButton("Cancel") { dialog, which ->
-                dialog.cancel()
-            }
-
-            var speedSide = dialogView.findViewById<Button>(R.id.speedSide)
-            speedSide.setOnClickListener{
-                tempSelection = 11
-                speedSide.setBackgroundColor(Color.RED)
-            }
-            dialogBuilder.setPositiveButton("Select"){_,_ ->
-                if(tempSelection == 11) {
-                    listener!!.onFragmentInteraction(11)
+            val builder = androidx.appcompat.app.AlertDialog.Builder(this.context!!)
+            builder.setItems(
+                resources.getStringArray(R.array.parklot_array))
+            { _, which ->
+                when (which) {
+                    0 -> {
+                        "SpeedSide"
+                        listener!!.onFragmentInteraction(11)
+                    }
+                    1 -> {
+                        "Speed Main"
+                        listener!!.onFragmentInteraction(12)
+                    }
+                    2 -> {
+                        "Precopo Main"
+                        listener!!.onFragmentInteraction(13)
+                    }
+                    3 -> {
+                        "SRC Main"
+                        listener!!.onFragmentInteraction(14)
+                    }
+                    4 -> {
+                        "SRC Back"
+                        listener!!.onFragmentInteraction(15)
+                    }
+                    else -> {
+                        "None"
+                    }
                 }
             }
-            dialogBuilder.create().show()
-
+            builder.create().show()
         }
 
-        tokenRef.get().addOnCompleteListener{ task ->
+
+        tokenRef.whereEqualTo("uid",uid).get().addOnCompleteListener{ task ->
             if(task.isSuccessful){
                 view.post_token.setText("My current tokens: ".plus(task.result!!.size().toString()))
             }
@@ -145,12 +154,12 @@ class getFragment : Fragment(){
          *
          * @param param1 Parameter 1.
          * @param param2 Parameter 2.
-         * @return A new instance of fragment getFragment.
+         * @return A new instance of fragment PostFragment.
          */
         // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(uid: String) =
-            getFragment().apply {
+            PostFragment().apply {
                 arguments = Bundle().apply {
                     putString(ARG_UID, uid)
                 }

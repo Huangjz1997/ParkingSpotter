@@ -1,17 +1,14 @@
 package edu.rosehulman.parkingspotter
 
 import android.content.Intent
-import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import com.google.firebase.auth.FirebaseAuth
-import edu.rosehulman.parkingspotter.getFragment.OnFragmentInteractionListener
 
 class ContentHolder : AppCompatActivity(), HomeFragment.OnFragmentInteractionListener,
-    getFragment.OnFragmentInteractionListener, postFragment.OnFragmentInteractionListener, speedSideFragment.OnFragmentInteractionListener
+    PostFragment.OnFragmentInteractionListener, GetFragment.OnFragmentInteractionListener, ParkingLotFragment.OnFragmentInteractionListener
 
 {
     lateinit var uid : String
@@ -22,20 +19,20 @@ class ContentHolder : AppCompatActivity(), HomeFragment.OnFragmentInteractionLis
             val ft = supportFragmentManager.beginTransaction()
             ft.setCustomAnimations(android.R.anim.fade_in,
                 android.R.anim.fade_out)
-            ft.replace(R.id.main_content, getFragment.newInstance(uid))
+            ft.replace(R.id.main_content, PostFragment.newInstance(uid))
             ft.commit()
         }else if(flag == 2){
             val ft = supportFragmentManager.beginTransaction()
             ft.setCustomAnimations(android.R.anim.fade_in,
                 android.R.anim.fade_out)
-            ft.replace(R.id.main_content, postFragment.newInstance(uid))
+            ft.replace(R.id.main_content, GetFragment.newInstance(uid))
             ft.commit()
         }
-        else if(flag == 11){
+        else{
             val ft = supportFragmentManager.beginTransaction()
             ft.setCustomAnimations(android.R.anim.fade_in,
                 android.R.anim.fade_out)
-            ft.replace(R.id.main_content, speedSideFragment.newInstance(uid))
+            ft.replace(R.id.main_content, ParkingLotFragment.newInstance(uid, flag))
             ft.commit()
         }
     }

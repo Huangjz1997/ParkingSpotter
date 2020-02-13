@@ -57,7 +57,7 @@ class HomeFragment : Fragment() {
             listener!!.onFragmentInteraction(2);
         }
 
-        tokenRef.get().addOnCompleteListener{ task ->
+        tokenRef.whereEqualTo("uid",uid).get().addOnCompleteListener{ task ->
             if(task.isSuccessful){
                 view.home_token.setText("My current tokens: ".plus(task.result!!.size().toString()))
             }
