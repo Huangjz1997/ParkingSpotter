@@ -10,7 +10,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import kotlinx.android.synthetic.main.fragment_get.view.*
+import kotlinx.android.synthetic.main.fragment_post.view.*
 import kotlinx.android.synthetic.main.fragment_home.view.*
 
 // TODO: Rename parameter arguments, choose names that match

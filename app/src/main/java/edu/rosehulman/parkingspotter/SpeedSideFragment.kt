@@ -17,7 +17,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.*
 import com.google.firebase.firestore.FirebaseFirestoreException
 import com.google.firebase.firestore.QuerySnapshot
-import kotlinx.android.synthetic.main.fragment_get.view.*
+import kotlinx.android.synthetic.main.fragment_post.view.*
 import kotlinx.android.synthetic.main.fragment_speed_side.*
 import kotlinx.android.synthetic.main.fragment_speed_side.view.*
 import kotlinx.android.synthetic.main.report.view.*

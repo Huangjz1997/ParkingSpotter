@@ -1,88 +1,117 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/fragment_home"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#ffffff"
     >
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/title"
-        android:textSize="28sp"
-        android:background="@color/colorRose"
-        android:textColor="#ffffff"
-        android:padding="10dp"
-        ></TextView>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Dashboard"
-        android:textSize="30sp"
-        android:textStyle="bold"
-        android:background="#FFFFFF"
-        android:textColor="#000000"
-        android:gravity="left"
-        android:padding="10dp"
-        ></TextView>
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Welcome Jizhou!"
-        android:textSize="20sp"
-        android:background="#C4C4C4"
-        android:textColor="#000000"
-        android:gravity="center"
-        android:padding="10dp"
-        ></TextView>
-
-
     <LinearLayout
+        android:id="@+id/home_top"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="20dp"
-        android:background="#C4C4C4"
-        android:orientation="vertical">
-
-        <Button
-            android:id="@+id/get"
-            android:layout_width="250dp"
-            android:layout_height="100dp"
-            android:layout_gravity="center"
-            android:layout_margin="18dp"
+        android:orientation="vertical"
+        >
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/title"
+            android:textSize="28sp"
             android:background="@color/colorRose"
-            android:text="Post"
-            android:textColor="#FFFFFF"
-            android:textSize="20sp"></Button>
+            android:textColor="#ffffff"
+            android:padding="10dp"
+            ></TextView>
 
-        <Button
-            android:id="@+id/post"
-            android:layout_width="250dp"
-            android:layout_height="100dp"
-            android:layout_gravity="center"
-            android:layout_margin="18dp"
-            android:background="@color/colorRose"
-            android:text="Get"
-            android:textColor="#FFFFFF"
-            android:textSize="20sp"></Button>
-
-        <Button
-            android:id="@+id/transfer"
-            android:layout_width="250dp"
-            android:layout_height="100dp"
-            android:layout_gravity="center"
-            android:layout_margin="18dp"
-            android:background="@color/colorRose"
-            android:text="Transfer"
-            android:textColor="#FFFFFF"
-            android:textSize="20sp"></Button>
-
-
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Dashboard"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            android:background="#FFFFFF"
+            android:textColor="#000000"
+            android:gravity="left"
+            android:padding="10dp"
+            ></TextView>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Welcome Jizhou!"
+            android:textSize="20sp"
+            android:background="#C4C4C4"
+            android:textColor="#000000"
+            android:gravity="center"
+            android:padding="10dp"
+            ></TextView>
     </LinearLayout>
 
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_below="@id/home_top"
+        android:layout_above="@id/home_token"
+        >
+        <LinearLayout
+            android:gravity="center"
+            android:id="@+id/home_buttons"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="20dp"
+            android:background="#C4C4C4"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/get"
+                android:layout_width="250dp"
+                android:layout_height="100dp"
+                android:layout_gravity="center"
+                android:layout_marginBottom="29dp"
+                android:background="@color/colorRose"
+                android:text="Post"
+                android:textColor="#FFFFFF"
+                android:textSize="20sp"></Button>
+
+            <Button
+                android:id="@+id/post"
+                android:layout_width="250dp"
+                android:layout_height="100dp"
+                android:layout_gravity="center"
+                android:layout_marginBottom="29dp"
+                android:background="@color/colorRose"
+                android:text="Get"
+                android:textColor="#FFFFFF"
+                android:textSize="20sp"></Button>
+
+            <Button
+                android:id="@+id/transfer"
+                android:layout_width="250dp"
+                android:layout_height="100dp"
+                android:layout_gravity="center"
+
+                android:background="@color/colorRose"
+                android:text="Transfer"
+                android:textColor="#FFFFFF"
+                android:textSize="20sp"></Button>
+
+
+        </LinearLayout>
+
+
+
+    </RelativeLayout>
+
+
+
     <TextView
+
+        android:layout_alignParentBottom="true"
         android:id="@+id/home_token"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -95,4 +124,5 @@
         ></TextView>
 
 
-</LinearLayout>
+
+</RelativeLayout>

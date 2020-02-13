@@ -1,19 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".speedSideFragment">
 
-
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/fragment_get"
-        android:orientation="vertical" android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#ffffff"
-        >
-
         <TextView
+            android:id="@+id/speedside_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/title"
@@ -23,6 +17,8 @@
             android:padding="10dp"
             ></TextView>
         <LinearLayout
+            android:id="@+id/speedside_select"
+             android:layout_below="@id/speedside_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -48,6 +44,8 @@
                 android:text="Select Parking Lot"></Button>
         </LinearLayout>
         <TextView
+            android:id="@+id/speedside_welcome"
+            android:layout_below="@+id/speedside_select"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Welcome Jizhou!"
@@ -60,14 +58,16 @@
 
 
         <LinearLayout
+            android:layout_above="@id/speedside_token"
+            android:layout_below="@+id/speedside_welcome"
             android:layout_width="match_parent"
+            android:layout_height= "match_parent"
             android:layout_margin="20dp"
-            android:layout_height= "350dp"
             android:background="#C4C4C4"
             android:orientation="vertical"
             android:layout_gravity="center"
             android:gravity="center"
-            android:padding="3dp">
+             >
 
             <ImageView
                 android:layout_width="350dp"
@@ -114,6 +114,7 @@
         </LinearLayout>
 
         <TextView
+            android:layout_alignParentBottom="true"
             android:id="@+id/speedside_token"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -126,6 +127,6 @@
             ></TextView>
 
 
-    </LinearLayout>
 
-</FrameLayout>
+
+</RelativeLayout>

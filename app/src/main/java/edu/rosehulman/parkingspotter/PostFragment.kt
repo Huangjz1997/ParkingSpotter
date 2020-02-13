@@ -1,126 +1,106 @@
 package edu.rosehulman.parkingspotter
 
+import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.Context
-import android.net.Uri
+import android.graphics.Color
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import com.google.firebase.firestore.DocumentChange
-import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.FirebaseFirestoreException
-import com.google.firebase.firestore.QuerySnapshot
-import kotlinx.android.synthetic.main.fragment_get.view.*
+import androidx.fragment.app.Fragment
+import com.google.firebase.firestore.*
 import kotlinx.android.synthetic.main.fragment_post.view.*
-import kotlin.random.Random
-import kotlin.random.Random.Default.nextInt
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val ARG_UID = "uid"
 
-
 /**
  * A simple [Fragment] subclass.
  * Activities that contain this fragment must implement the
- * [postFragment.OnFragmentInteractionListener] interface
+ * [getFragment.OnFragmentInteractionListener] interface
  * to handle interaction events.
- * Use the [postFragment.newInstance] factory method to
+ * Use the [getFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class postFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var uid: String? = null
-    private var listener: OnFragmentInteractionListener? = null
-    private var parkLotName: String? = "None"
+class getFragment : Fragment(){
 
-    private var spotList = ArrayList<Spot>()
-    private val spotRef = FirebaseFirestore.getInstance().collection("SpeedSide")
+    private var listener: OnFragmentInteractionListener? = null
+    private var tempSelection: Int = 0
+    private var tokenList = ArrayList<Token>()
+
+    private var uid : String? = null
     private val tokenRef = FirebaseFirestore.getInstance().collection("Tokens")
 
-    init {
-        spotRef.addSnapshotListener{ snapshot: QuerySnapshot?, exception: FirebaseFirestoreException? ->
+    init{
+        tokenRef.addSnapshotListener{ snapshot: QuerySnapshot?, exception: FirebaseFirestoreException? ->
             if(exception != null){
-
             }
             for (docChange in snapshot!!.documentChanges){
-                val spot = Spot.fromSnapshot(docChange.document)
+                val token = Token.fromSnapshot(docChange.document)
                 when(docChange.type){
-
                     DocumentChange.Type.ADDED -> {
-                        spotList.add(0, spot)
-
+                        tokenList.add(0,token)
                     }
                 }
             }
         }
-    }
 
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            uid = it.getString(ARG_UID)
+            uid = it.getString(ARG_UID)!!
         }
+
     }
 
+    @SuppressLint("ResourceType")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        val view = inflater.inflate(R.layout.fragment_post, container, false)
-        var getButton = view.findViewById<Button>(R.id.getbut)
-        var selectButton = view.findViewById<Button>(R.id.selectGetButton)
+
+        var view = inflater.inflate(R.layout.fragment_post,container,false)
+        var selectButton = view.findViewById<Button>(R.id.selectLotButton)
 
         selectButton.setOnClickListener{
-            val builder = androidx.appcompat.app.AlertDialog.Builder(this.context!!)
-            builder.setItems(
-                    resources.getStringArray(R.array.parklot_array))
-            { _, which ->
-                parkLotName = when (which) {
-                    0 -> "SpeedSide"
-                    1 -> "Speed Main"
-                    2 -> "Precopo Main"
-                    3 -> "SRC Main"
-                    4 -> "SRC Back"
-                    else -> "None"
+            val dialogBuilder = AlertDialog.Builder(this.context)
+            dialogBuilder.setTitle("Hi,")
+            dialogBuilder.setMessage("Select the parking lot:")
+            dialogBuilder.setCancelable(false)
+            val dialogView = LayoutInflater.from(this.context).inflate(R.layout.dialog_choose,null,false)
+            dialogBuilder.setView(dialogView)
+
+            dialogBuilder.setNeutralButton("Cancel") { dialog, which ->
+                dialog.cancel()
+            }
+
+            var speedSide = dialogView.findViewById<Button>(R.id.speedSide)
+            speedSide.setOnClickListener{
+                tempSelection = 11
+                speedSide.setBackgroundColor(Color.RED)
+            }
+            dialogBuilder.setPositiveButton("Select"){_,_ ->
+                if(tempSelection == 11) {
+                    listener!!.onFragmentInteraction(11)
                 }
             }
-            builder.create().show()
-        }
-
-        getButton.setOnClickListener {
-
-
-            if (parkLotName === "None"){
-                val builder = androidx.appcompat.app.AlertDialog.Builder(this.context!!)
-                builder.setTitle("Please select parking lot first!")
-                builder.create().show()
-
-            }else{
-
-                val tempSpot = spotList.get(nextInt(0,4));
-                val tempRow = "Row: "
-                val tempCol = "Column: "
-                val tempString = "\n ParkingLot \n SpeedSide"
-
-                view.post_row.setText(tempRow.plus(tempSpot.row))
-                view.post_column.setText(tempRow.plus(tempSpot.column).plus(tempString))
-            }
-
+            dialogBuilder.create().show()
 
         }
+
         tokenRef.get().addOnCompleteListener{ task ->
             if(task.isSuccessful){
-                view.get_token.setText("My current tokens: ".plus(task.result!!.size().toString()))
+                view.post_token.setText("My current tokens: ".plus(task.result!!.size().toString()))
             }
         }
 
-        return view
+
+         return view
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -165,19 +145,15 @@ class postFragment : Fragment() {
          *
          * @param param1 Parameter 1.
          * @param param2 Parameter 2.
-         * @return A new instance of fragment postFragment.
+         * @return A new instance of fragment getFragment.
          */
         // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(uid: String) =
-            postFragment().apply {
+            getFragment().apply {
                 arguments = Bundle().apply {
-                    putString("uid", uid)
+                    putString(ARG_UID, uid)
                 }
             }
     }
-
-
-
-
 }

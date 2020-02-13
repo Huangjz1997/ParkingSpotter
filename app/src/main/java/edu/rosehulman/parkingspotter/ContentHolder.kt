@@ -20,15 +20,21 @@ class ContentHolder : AppCompatActivity(), HomeFragment.OnFragmentInteractionLis
     override fun onFragmentInteraction(flag: Int) {
         if(flag == 1) {
             val ft = supportFragmentManager.beginTransaction()
+            ft.setCustomAnimations(android.R.anim.fade_in,
+                android.R.anim.fade_out)
             ft.replace(R.id.main_content, getFragment.newInstance(uid))
             ft.commit()
         }else if(flag == 2){
             val ft = supportFragmentManager.beginTransaction()
+            ft.setCustomAnimations(android.R.anim.fade_in,
+                android.R.anim.fade_out)
             ft.replace(R.id.main_content, postFragment.newInstance(uid))
             ft.commit()
         }
         else if(flag == 11){
             val ft = supportFragmentManager.beginTransaction()
+            ft.setCustomAnimations(android.R.anim.fade_in,
+                android.R.anim.fade_out)
             ft.replace(R.id.main_content, speedSideFragment.newInstance(uid))
             ft.commit()
         }
