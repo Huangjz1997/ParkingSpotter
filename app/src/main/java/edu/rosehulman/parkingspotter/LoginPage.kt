@@ -13,11 +13,11 @@ class LoginPage : AppCompatActivity() {
 
     lateinit var authListener: FirebaseAuth.AuthStateListener
     val auth = FirebaseAuth.getInstance()
-
+    lateinit var uid : String
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login_page)
-        lateinit var uid : String
+        supportActionBar!!.hide()
         authListener = FirebaseAuth.AuthStateListener { auth: FirebaseAuth ->
             val user = auth.currentUser
             if (user == null) {
@@ -37,9 +37,9 @@ class LoginPage : AppCompatActivity() {
             startActivity(myIntent)
         }
 
-        var button1: Button =  findViewById(R.id.login)
+        var loginButton: Button =  findViewById(R.id.login)
 
-        button1.setOnClickListener(){
+        loginButton.setOnClickListener(){
             val username = username.text;
             val password = password.text;
 
@@ -60,7 +60,9 @@ class LoginPage : AppCompatActivity() {
 
     fun login(username:String, password: String){
         auth.signInWithEmailAndPassword(username, password).addOnSuccessListener {
+            uid = it.user!!.uid
             val myIntent = Intent(this, ContentHolder::class.java)
+            myIntent.putExtra("uid", it.user!!.uid);
             startActivity(myIntent)
         }.addOnFailureListener{
             Toast.makeText(this,"Wrong email/password combination!", Toast.LENGTH_SHORT).show()

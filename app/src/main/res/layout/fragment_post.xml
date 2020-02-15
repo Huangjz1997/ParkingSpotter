@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/title"
-        android:textSize="28sp"
+        android:textSize="24sp"
         android:background="@color/colorRose"
         android:textColor="#ffffff"
         android:padding="10dp"
@@ -26,26 +26,27 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:background="#FFFFFF"
-        android:gravity="center"
+
         android:id="@+id/post_select"
         >
 
         <TextView
+            android:paddingLeft="10dp"
+            android:gravity="center"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:background="#FFFFFF"
-            android:gravity="left"
-            android:padding="10dp"
             android:text="Report a free space at:"
             android:textColor="#000000"
-            android:textSize="25sp"
+            android:textSize="24sp"
             android:textStyle="bold"></TextView>
         <Button
-            android:layout_width="80dp"
-            android:layout_height="60dp"
+            android:layout_marginLeft="30dp"
+            android:layout_width="100dp"
+            android:layout_height="match_parent"
             android:textSize="10sp"
             android:id="@+id/selectLotButton"
-            android:text="Select Parking Lot"></Button>
+            android:text="Select a Parking Lot"></Button>
 
     </LinearLayout>
     <TextView

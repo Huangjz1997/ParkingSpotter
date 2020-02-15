@@ -14,7 +14,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/title"
-            android:textSize="28sp"
+            android:textSize="24sp"
             android:background="@color/colorRose"
             android:textColor="#ffffff"
             android:padding="10dp"

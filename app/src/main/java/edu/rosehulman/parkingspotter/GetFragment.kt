@@ -154,6 +154,7 @@ class GetFragment : Fragment() {
         listener?.onFragmentInteraction(flag)
     }
 
+
     private fun update(view: View, lot: String) {
         parkLotName = lot
         spotList = ArrayList<Spot>()

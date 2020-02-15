@@ -20,6 +20,8 @@ class MainActivity : AppCompatActivity() {
             startActivity(myIntent)
         }
 
+        supportActionBar!!.hide()
+
 
     }
 
@@ -29,10 +31,10 @@ class MainActivity : AppCompatActivity() {
         // as you specify a parent activity in AndroidManifest.xml.
         return when (item.itemId) {
 
-            R.id.log_out -> {
-//                auth.signOut()
-                true
-            }
+//            R.id.log_out -> {
+////                auth.signOut()
+//                true
+//            }
             else -> super.onOptionsItemSelected(item)
         }
     }

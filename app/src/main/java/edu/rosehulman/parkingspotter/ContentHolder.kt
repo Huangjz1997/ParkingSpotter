@@ -15,25 +15,33 @@ class ContentHolder : AppCompatActivity(), HomeFragment.OnFragmentInteractionLis
     val auth = FirebaseAuth.getInstance()
 
     override fun onFragmentInteraction(flag: Int) {
-        if(flag == 1) {
+        if(flag == -1) {
+                auth.signOut()
+                val myIntent = Intent(this, MainActivity::class.java)
+                startActivity(myIntent)
+        }
+        else if(flag == 1) {
             val ft = supportFragmentManager.beginTransaction()
-            ft.setCustomAnimations(android.R.anim.fade_in,
+            ft.setCustomAnimations(android.R.anim.fade_in,android.R.anim.fade_out,android.R.anim.fade_in,
                 android.R.anim.fade_out)
-            ft.replace(R.id.main_content, PostFragment.newInstance(uid))
+            ft.replace(R.id.main_content, PostFragment.newInstance(uid)).addToBackStack(null)
             ft.commit()
+            ft.addToBackStack(null);
         }else if(flag == 2){
             val ft = supportFragmentManager.beginTransaction()
-            ft.setCustomAnimations(android.R.anim.fade_in,
+            ft.setCustomAnimations(android.R.anim.fade_in,android.R.anim.fade_out,android.R.anim.fade_in,
                 android.R.anim.fade_out)
-            ft.replace(R.id.main_content, GetFragment.newInstance(uid))
+            ft.replace(R.id.main_content, GetFragment.newInstance(uid)).addToBackStack(null)
             ft.commit()
+            ft.addToBackStack(null);
         }
         else{
             val ft = supportFragmentManager.beginTransaction()
-            ft.setCustomAnimations(android.R.anim.fade_in,
+            ft.setCustomAnimations(android.R.anim.fade_in,android.R.anim.fade_out,android.R.anim.fade_in,
                 android.R.anim.fade_out)
-            ft.replace(R.id.main_content, ParkingLotFragment.newInstance(uid, flag))
+            ft.replace(R.id.main_content, ParkingLotFragment.newInstance(uid, flag)).addToBackStack(null)
             ft.commit()
+            ft.addToBackStack(null);
         }
     }
 
@@ -41,10 +49,13 @@ class ContentHolder : AppCompatActivity(), HomeFragment.OnFragmentInteractionLis
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_content_holder)
         uid = getIntent().getStringExtra("uid")
+        supportActionBar!!.hide()
 
-        val ft = supportFragmentManager.beginTransaction()
-        ft.replace(R.id.main_content, HomeFragment.newInstance(uid))
-        ft.commit()
+        if(uid != null){
+            val ft = supportFragmentManager.beginTransaction()
+            ft.replace(R.id.main_content, HomeFragment.newInstance(uid))
+            ft.commit()
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -59,12 +70,12 @@ class ContentHolder : AppCompatActivity(), HomeFragment.OnFragmentInteractionLis
         // as you specify a parent activity in AndroidManifest.xml.
         return when (item.itemId) {
 
-            R.id.log_out -> {
-                auth.signOut()
-                val myIntent = Intent(this, LoginPage::class.java)
-               startActivity(myIntent)
-                true
-            }
+//            R.id.log_out -> {
+//                auth.signOut()
+//                val myIntent = Intent(this, LoginPage::class.java)
+//                startActivity(myIntent)
+//                true
+//            }
 
             else -> super.onOptionsItemSelected(item)
         }

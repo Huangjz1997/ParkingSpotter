@@ -1,6 +1,7 @@
 package edu.rosehulman.parkingspotter
 
 import android.content.Context
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -8,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import androidx.appcompat.app.AlertDialog
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.fragment_post.view.*
@@ -30,7 +32,7 @@ class HomeFragment : Fragment() {
     private val tokenRef = FirebaseFirestore.getInstance().collection("Tokens")
     private var listener: OnFragmentInteractionListener? = null
     private var uid : String = ""
-
+    val auth = FirebaseAuth.getInstance()
     init{
 
     }
@@ -40,6 +42,7 @@ class HomeFragment : Fragment() {
         arguments?.let {
             uid = it.getString(ARG_UID)!!
         }
+
     }
 
     override fun onCreateView(
@@ -55,6 +58,18 @@ class HomeFragment : Fragment() {
         var postbutton:Button = view.findViewById(R.id.post);
         postbutton.setOnClickListener{
             listener!!.onFragmentInteraction(2);
+        }
+
+        view.log_out.setOnClickListener {
+            val builder = AlertDialog.Builder(this.context!!)
+            builder.setMessage("Are you sure you want to log out?")
+            builder.setPositiveButton("Yes") { dialog, which ->
+                listener!!.onFragmentInteraction(-1)
+            }
+            builder.setNegativeButton("Cancel") { dialog, which ->
+                false
+            }
+            builder.create().show()
         }
 
         tokenRef.whereEqualTo("uid",uid).get().addOnCompleteListener{ task ->
@@ -94,7 +109,6 @@ class HomeFragment : Fragment() {
      * for more information.
      */
     interface OnFragmentInteractionListener {
-
         fun onFragmentInteraction(flag: Int);
     }
 
