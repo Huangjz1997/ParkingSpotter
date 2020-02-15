@@ -8,8 +8,8 @@ import android.view.MenuItem
 import com.google.firebase.auth.FirebaseAuth
 
 class ContentHolder : AppCompatActivity(), HomeFragment.OnFragmentInteractionListener,
-    PostFragment.OnFragmentInteractionListener, GetFragment.OnFragmentInteractionListener, ParkingLotFragment.OnFragmentInteractionListener
-
+    PostFragment.OnFragmentInteractionListener, GetFragment.OnFragmentInteractionListener, ParkingLotFragment.OnFragmentInteractionListener,
+        TransferFragment.OnFragmentInteractionListener
 {
     lateinit var uid : String
     val auth = FirebaseAuth.getInstance()
@@ -32,6 +32,14 @@ class ContentHolder : AppCompatActivity(), HomeFragment.OnFragmentInteractionLis
             ft.setCustomAnimations(android.R.anim.fade_in,android.R.anim.fade_out,android.R.anim.fade_in,
                 android.R.anim.fade_out)
             ft.replace(R.id.main_content, GetFragment.newInstance(uid)).addToBackStack(null)
+            ft.commit()
+            ft.addToBackStack(null);
+        }
+        else if(flag == 3){
+            val ft = supportFragmentManager.beginTransaction()
+            ft.setCustomAnimations(android.R.anim.fade_in,android.R.anim.fade_out,android.R.anim.fade_in,
+                android.R.anim.fade_out)
+            ft.replace(R.id.main_content, TransferFragment.newInstance(uid)).addToBackStack(null)
             ft.commit()
             ft.addToBackStack(null);
         }

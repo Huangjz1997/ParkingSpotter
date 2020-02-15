@@ -63,7 +63,7 @@ class PostFragment : Fragment(){
     ): View? {
 
         var view = inflater.inflate(R.layout.fragment_post,container,false)
-
+//        view.post_map.setImageResource(R.drawable.map)
 
         var selectButton = view.findViewById<Button>(R.id.selectLotButton)
 
@@ -74,24 +74,28 @@ class PostFragment : Fragment(){
             { _, which ->
                 when (which) {
                     0 -> {
-                        "SpeedSide"
+                        "Speed Main Lot"
                         listener!!.onFragmentInteraction(11)
                     }
                     1 -> {
-                        "Speed Main"
+                        "Speed Small Lot"
                         listener!!.onFragmentInteraction(12)
                     }
                     2 -> {
-                        "Precopo Main"
+                        "Percopo Main Lot"
                         listener!!.onFragmentInteraction(13)
                     }
                     3 -> {
-                        "SRC Main"
+                        "Cook Lot"
                         listener!!.onFragmentInteraction(14)
                     }
                     4 -> {
-                        "SRC Back"
+                        "SRC West Lot"
                         listener!!.onFragmentInteraction(15)
+                    }
+                    5 -> {
+                        "Lower Moench Lot"
+                        listener!!.onFragmentInteraction(16)
                     }
                     else -> {
                         "None"

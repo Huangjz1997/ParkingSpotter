@@ -76,10 +76,13 @@
         >
 
     <ImageView
-        android:layout_width="350dp"
-        android:layout_height="200dp"
-        android:src="@drawable/ic_launcher_background"
-        android:layout_marginBottom="20dp"></ImageView>
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:id="@+id/post_map"
+        android:src="@drawable/map"
+         >
+
+    </ImageView>
 
 
 

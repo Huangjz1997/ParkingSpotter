@@ -15,7 +15,7 @@ class RegisterPage : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register_page)
-
+        supportActionBar!!.hide()
 
         var button: Button =  findViewById(R.id.registeruser)
         button.setOnClickListener(){
@@ -30,7 +30,7 @@ class RegisterPage : AppCompatActivity() {
              val myIntent = Intent(this, ContentHolder::class.java)
              startActivity(myIntent)
         }.addOnFailureListener{
-            Toast.makeText(this,"Wrong email/password combination!", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this,"Register error!", Toast.LENGTH_SHORT).show()
         }
     }
 }

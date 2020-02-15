@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
@@ -59,13 +60,20 @@ class LoginPage : AppCompatActivity() {
     }
 
     fun login(username:String, password: String){
-        auth.signInWithEmailAndPassword(username, password).addOnSuccessListener {
-            uid = it.user!!.uid
-            val myIntent = Intent(this, ContentHolder::class.java)
-            myIntent.putExtra("uid", it.user!!.uid);
-            startActivity(myIntent)
-        }.addOnFailureListener{
-            Toast.makeText(this,"Wrong email/password combination!", Toast.LENGTH_SHORT).show()
+
+        if(username == "" || password == ""){
+            Toast.makeText(this,"Please enter username/password!", Toast.LENGTH_SHORT).show()
+        }else{
+            auth.signInWithEmailAndPassword(username, password).addOnSuccessListener {
+
+                    uid = it.user!!.uid
+                    val myIntent = Intent(this, ContentHolder::class.java)
+                    myIntent.putExtra("uid", it.user!!.uid);
+                    startActivity(myIntent)
+
+            }.addOnFailureListener{
+                Toast.makeText(this,"Wrong email/password combination!", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 }

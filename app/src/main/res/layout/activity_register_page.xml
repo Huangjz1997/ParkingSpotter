@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorRose"
@@ -15,110 +15,123 @@
         android:gravity="center"
         android:padding="10dp"
         ></TextView>
-
-    <LinearLayout
-
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="10dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        >
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Username"
-            android:textSize="36sp"
-            ></TextView>
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="36sp"
-            android:background="#ffffff"
-            android:id="@+id/registerusername"
-            >
-
-        </EditText>
-    </LinearLayout>
-
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical"
-        android:padding="10dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
+        android:gravity="center"
         >
-        <TextView
+
+
+        <LinearLayout
+
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Password"
-            android:textSize="36sp"
-            ></TextView>
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="36sp"
-            android:background="#ffffff"
-            android:id="@+id/registerpassword"
+            android:orientation="vertical"
+            android:padding="10dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
             >
-        </EditText>
+            <TextView
+                android:textColor="#ffffff"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Username"
+                android:textSize="36sp"
+                ></TextView>
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="36sp"
+                android:background="@drawable/round_corner"
+                android:id="@+id/registerusername"
+                >
 
-    </LinearLayout>
+            </EditText>
+        </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="10dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        >
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Re-end password"
-            android:textSize="36sp"
-
-            ></TextView>
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="36sp"
-            android:background="#ffffff"
+            android:orientation="vertical"
+            android:padding="10dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
             >
-        </EditText>
+            <TextView
+                android:textColor="#ffffff"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Password"
+                android:textSize="36sp"
+                ></TextView>
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="36sp"
+                android:background="@drawable/round_corner"
+                android:id="@+id/registerpassword"
+                >
+            </EditText>
 
-    </LinearLayout>
+        </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="10dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        >
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Email"
-            android:textSize="36sp"
-            ></TextView>
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="36sp"
-            android:background="#ffffff"
+            android:orientation="vertical"
+            android:padding="10dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
             >
-        </EditText>
+            <TextView
+                android:textColor="#ffffff"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Re-enter password"
+                android:textSize="36sp"
 
+                ></TextView>
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="36sp"
+                android:background="@drawable/round_corner"
+                >
+            </EditText>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="10dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            >
+            <TextView
+                android:textColor="#ffffff"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Email"
+                android:textSize="36sp"
+                ></TextView>
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="36sp"
+                android:background="@drawable/round_corner"
+                >
+            </EditText>
+
+        </LinearLayout>
+
+        <Button
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:id="@+id/registeruser"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Register"></Button>
     </LinearLayout>
 
-    <Button
-        android:layout_marginTop="20dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:id="@+id/registeruser"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Register"></Button>
 
-</LinearLayout>
+</RelativeLayout>

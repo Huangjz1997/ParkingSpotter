@@ -52,15 +52,17 @@ class ParkingLotFragment : Fragment() {
             lotNum = it.getInt(ARG_LOT)
         }
         if(lotNum == 11){
-            lotName = "SpeedSide"
+            lotName = "SpeedMainLot"
         }else if(lotNum == 12){
-            lotName = "SpeedMain"
+            lotName = "SpeedSmallLot"
         }else if(lotNum == 13){
-            lotName = "PercopoMain"
+            lotName = "PercopoMainLot"
         }else if(lotNum == 14){
-            lotName = "SRCMain"
+            lotName = "CookLot"
         }else if(lotNum == 15){
-            lotName = "SRCBack"
+            lotName = "SRCWestLot"
+        }else if(lotNum == 16){
+            lotName = "LowerMoenchLot"
         }
 
         spotRef = FirebaseFirestore.getInstance().collection(lotName!!).addSnapshotListener { snapshot: QuerySnapshot?, exception: FirebaseFirestoreException? ->

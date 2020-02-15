@@ -59,6 +59,10 @@ class HomeFragment : Fragment() {
         postbutton.setOnClickListener{
             listener!!.onFragmentInteraction(2);
         }
+        var transferbutton:Button = view.findViewById(R.id.transfer)
+        transferbutton.setOnClickListener{
+            listener!!.onFragmentInteraction(3);
+        }
 
         view.log_out.setOnClickListener {
             val builder = AlertDialog.Builder(this.context!!)

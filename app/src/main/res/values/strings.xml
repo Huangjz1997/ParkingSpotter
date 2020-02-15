@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">ParkingSpotter</string>
     <string name="welcome_text">Rose-Hulman Parking Spotter</string>
-    <string name="start_text"><![CDATA[Start ->]]></string>
+    <string name="start_text"><![CDATA[Start   ->]]></string>
     <string name="title">Rose-hulman parking spotter</string>
     <string-array name="parklot_array">
         <item>Speed Side</item>

@@ -7,10 +7,13 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.*
+import kotlinx.android.synthetic.main.fragment_transfer.view.*
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
+private const val ARG_UID = "uid"
 private const val ARG_PARAM2 = "param2"
 
 /**
@@ -21,17 +24,50 @@ private const val ARG_PARAM2 = "param2"
  * Use the [transferFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class transferFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+class TransferFragment : Fragment() {
+    val auth = FirebaseAuth.getInstance()
     private var listener: OnFragmentInteractionListener? = null
+    private var uid: String? = null
+    private var tokenRef: ListenerRegistration? = null
+    private var tokenList = ArrayList<Token>()
+
+    private var userRef: ListenerRegistration? = null
+    private var userList = ArrayList<User>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+            uid = it.getString(ARG_UID)
+        }
+        tokenRef = FirebaseFirestore.getInstance().collection("Tokens").whereEqualTo("uid",uid).addSnapshotListener{ snapshot: QuerySnapshot?, exception: FirebaseFirestoreException? ->
+            if(exception != null){
+            }
+            for (docChange in snapshot!!.documentChanges){
+                val token = Token.fromSnapshot(docChange.document)
+                when(docChange.type){
+                    DocumentChange.Type.ADDED -> {
+                        tokenList.add(0,token)
+                    }
+                    DocumentChange.Type.REMOVED -> {
+                        tokenList.removeAt(0)
+                    }
+                }
+            }
+        }
+        userRef = FirebaseFirestore.getInstance().collection("Users").addSnapshotListener{ snapshot: QuerySnapshot?, exception: FirebaseFirestoreException? ->
+            if(exception != null){
+            }
+            for (docChange in snapshot!!.documentChanges){
+                val user = User.fromSnapshot(docChange.document)
+                when(docChange.type){
+                    DocumentChange.Type.ADDED -> {
+                        userList.add(0,user)
+                    }
+//                    DocumentChange.Type.REMOVED -> {
+//                        tokenList.removeAt(0)
+//                    }
+                }
+            }
         }
     }
 
@@ -39,13 +75,23 @@ class transferFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_transfer, container, false)
+        val view =  inflater.inflate(R.layout.fragment_transfer, container, false)
+
+        var receiverName = view.receive_name
+        var numToken = view.transfer_token_num
+
+        transfer(receiverName.toString(),numToken.toString())
+
+        return view
+    }
+
+    fun transfer(receiverName:String, numToken:String){
+
     }
 
     // TODO: Rename method, update argument and hook method into UI event
-    fun onButtonPressed(uri: Uri) {
-        listener?.onFragmentInteraction(uri)
+    fun onButtonPressed(flag: Int) {
+        listener?.onFragmentInteraction(flag)
     }
 
     override fun onAttach(context: Context) {
@@ -74,8 +120,8 @@ class transferFragment : Fragment() {
      * for more information.
      */
     interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        fun onFragmentInteraction(uri: Uri)
+
+        fun onFragmentInteraction(flag: Int)
     }
 
     companion object {
@@ -89,11 +135,11 @@ class transferFragment : Fragment() {
          */
         // TODO: Rename and change types and number of parameters
         @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            transferFragment().apply {
+        fun newInstance(uid: String) =
+           TransferFragment().apply {
                 arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+                    putString(ARG_UID, uid)
+
                 }
             }
     }

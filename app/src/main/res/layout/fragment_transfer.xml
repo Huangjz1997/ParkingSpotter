@@ -1,14 +1,103 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".transferFragment">
+    android:background="@color/colorRose"
+    android:clickable="true"
+    android:focusableInTouchMode="true"
+    >
 
-    <!-- TODO: Update blank fragment layout -->
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="wrap_content"
+        android:text="@string/title"
+        android:textSize="28sp"
+        android:background="#aaaaaa"
+        android:textColor="#ffffff"
+        android:gravity="center"
+        android:padding="10dp"
+        ></TextView>
 
-</FrameLayout>
+    <LinearLayout
+        android:layout_marginTop="50dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp"
+        >
+        <TextView
+            android:textColor="#ffffff"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Receiver Name"
+            android:textSize="32sp"
+            ></TextView>
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="36sp"
+            android:id="@+id/receive_name"
+            android:background="#ffffff"
+            >
+        </EditText>
+    </LinearLayout>
+
+    <LinearLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp"
+        >
+        <TextView
+            android:textColor="#ffffff"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Re-enter Receiver Name"
+            android:textSize="32sp"
+            ></TextView>
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="36sp"
+            android:background="#ffffff"
+            android:id="@+id/rereceiver_name"
+            >
+        </EditText>
+
+    </LinearLayout>
+
+    <LinearLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp"
+        >
+        <TextView
+            android:textColor="#ffffff"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Number of Tokens"
+            android:textSize="32sp"
+            ></TextView>
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="36sp"
+            android:background="#ffffff"
+            android:id="@+id/transfer_token_num"
+            >
+        </EditText>
+
+    </LinearLayout>
+
+    <Button
+        android:layout_marginTop="50dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:id="@+id/transfer_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Confirm"></Button>
+
+
+
+</LinearLayout>
