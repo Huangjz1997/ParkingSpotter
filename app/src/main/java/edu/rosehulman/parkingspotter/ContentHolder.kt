@@ -12,6 +12,7 @@ class ContentHolder : AppCompatActivity(), HomeFragment.OnFragmentInteractionLis
         TransferFragment.OnFragmentInteractionListener
 {
     lateinit var uid : String
+    lateinit var email : String
     val auth = FirebaseAuth.getInstance()
 
     override fun onFragmentInteraction(flag: Int) {
@@ -39,7 +40,7 @@ class ContentHolder : AppCompatActivity(), HomeFragment.OnFragmentInteractionLis
             val ft = supportFragmentManager.beginTransaction()
             ft.setCustomAnimations(android.R.anim.fade_in,android.R.anim.fade_out,android.R.anim.fade_in,
                 android.R.anim.fade_out)
-            ft.replace(R.id.main_content, TransferFragment.newInstance(uid)).addToBackStack(null)
+            ft.replace(R.id.main_content, TransferFragment.newInstance(uid, email)).addToBackStack(null)
             ft.commit()
             ft.addToBackStack(null);
         }
@@ -47,7 +48,7 @@ class ContentHolder : AppCompatActivity(), HomeFragment.OnFragmentInteractionLis
             val ft = supportFragmentManager.beginTransaction()
             ft.setCustomAnimations(android.R.anim.fade_in,android.R.anim.fade_out,android.R.anim.fade_in,
                 android.R.anim.fade_out)
-            ft.replace(R.id.main_content, ParkingLotFragment.newInstance(uid, flag)).addToBackStack(null)
+            ft.replace(R.id.main_content, ParkingLotFragment.newInstance(uid, email, flag)).addToBackStack(null)
             ft.commit()
             ft.addToBackStack(null);
         }
@@ -57,6 +58,7 @@ class ContentHolder : AppCompatActivity(), HomeFragment.OnFragmentInteractionLis
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_content_holder)
         uid = getIntent().getStringExtra("uid")
+        email = getIntent().getStringExtra("email")
         supportActionBar!!.hide()
 
         if(uid != null){

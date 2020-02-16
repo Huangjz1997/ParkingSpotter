@@ -28,6 +28,8 @@ class RegisterPage : AppCompatActivity() {
     fun register(username:String, password:String){
          auth.createUserWithEmailAndPassword(username,password).addOnSuccessListener {
              val myIntent = Intent(this, ContentHolder::class.java)
+             myIntent.putExtra("uid", it.user!!.uid);
+             myIntent.putExtra("email", it.user!!.email);
              startActivity(myIntent)
         }.addOnFailureListener{
             Toast.makeText(this,"Register error!", Toast.LENGTH_SHORT).show()

@@ -26,7 +26,6 @@ private const val ARG_UID = "uid"
 class PostFragment : Fragment(){
 
     private var listener: OnFragmentInteractionListener? = null
-    private var tempSelection: Int = 0
     private var tokenList = ArrayList<Token>()
 
     private var uid : String? = null
@@ -78,7 +77,7 @@ class PostFragment : Fragment(){
                         listener!!.onFragmentInteraction(11)
                     }
                     1 -> {
-                        "Speed Small Lot"
+                        "Percopo Small Lot"
                         listener!!.onFragmentInteraction(12)
                     }
                     2 -> {

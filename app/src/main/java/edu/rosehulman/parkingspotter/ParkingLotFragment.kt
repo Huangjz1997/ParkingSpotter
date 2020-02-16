@@ -20,7 +20,8 @@ import kotlinx.android.synthetic.main.report.view.*
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val ARG_UID = "uid"
-private const val ARG_LOT = "LOT"
+private const val ARG_EMAIL = "email"
+private const val ARG_LOT = "lot"
 
 /**
  * A simple [Fragment] subclass.
@@ -33,6 +34,7 @@ private const val ARG_LOT = "LOT"
 class ParkingLotFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var uid: String? = null
+    private var email: String? = null
     private var lotNum: Int? = null
     private var listener: OnFragmentInteractionListener? = null
     private var spotList = ArrayList<Spot>()
@@ -40,6 +42,7 @@ class ParkingLotFragment : Fragment() {
     private lateinit var tokenRef : ListenerRegistration;
     private var tokenList = ArrayList<Token>()
     private var lotName:String? = null
+    private var lotTitle:String? = null
 
     init {
 
@@ -50,19 +53,26 @@ class ParkingLotFragment : Fragment() {
         arguments?.let {
             uid = it.getString(ARG_UID)
             lotNum = it.getInt(ARG_LOT)
+            email = it.getString(ARG_EMAIL)
         }
         if(lotNum == 11){
             lotName = "SpeedMainLot"
+            lotTitle = "Speed Main Lot"
         }else if(lotNum == 12){
-            lotName = "SpeedSmallLot"
+            lotName = "PercopoSmallLot"
+            lotTitle = "Percopo Small Lot"
         }else if(lotNum == 13){
             lotName = "PercopoMainLot"
+            lotTitle = "Percopo Main Lot"
         }else if(lotNum == 14){
             lotName = "CookLot"
+            lotTitle = "Cook Lot"
         }else if(lotNum == 15){
             lotName = "SRCWestLot"
+            lotTitle = "SRC West Lot"
         }else if(lotNum == 16){
             lotName = "LowerMoenchLot"
+            lotTitle = "Lower Moench Lot"
         }
 
         spotRef = FirebaseFirestore.getInstance().collection(lotName!!).addSnapshotListener { snapshot: QuerySnapshot?, exception: FirebaseFirestoreException? ->
@@ -127,7 +137,7 @@ class ParkingLotFragment : Fragment() {
             dialogBuilder.create().show()
         }
 
-        view.parking_lot_name.setText("Report a free space at ${lotName}")
+        view.parking_lot_name.setText("Report a free space at ${lotTitle}")
 
         FirebaseFirestore.getInstance().collection("Tokens").whereEqualTo("uid",uid).get().addOnCompleteListener { task ->
             if (task.isSuccessful) {
@@ -141,10 +151,9 @@ class ParkingLotFragment : Fragment() {
     fun updateReport(row: Number, col: Number) {
         rownum.text = "row: ".plus(row.toString())
         colnum.text = "column: ".plus(col.toString())
-//        spotList.add(Spot(row.toString(), col.toString(), uid!!))
+
         FirebaseFirestore.getInstance().collection(lotName!!).add(Spot(row.toString(), col.toString(), uid!!))
-        FirebaseFirestore.getInstance().collection("Tokens").add(Token(uid!!))
-//        tokenList.add(Token(uid!!))
+        FirebaseFirestore.getInstance().collection("Tokens").add(Token(uid!!, email!!))
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -193,10 +202,11 @@ class ParkingLotFragment : Fragment() {
          */
         // TODO: Rename and change types and number of parameters
         @JvmStatic
-        fun newInstance(uid: String, parkingLotNum: Int) =
+        fun newInstance(uid: String, email: String, parkingLotNum: Int) =
             ParkingLotFragment().apply {
                 arguments = Bundle().apply {
                     putString(ARG_UID, uid)
+                    putString(ARG_EMAIL, email)
                     putInt(ARG_LOT, parkingLotNum)
                 }
             }

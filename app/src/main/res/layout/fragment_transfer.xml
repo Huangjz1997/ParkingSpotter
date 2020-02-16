@@ -36,7 +36,7 @@
             android:layout_width="match_parent"
             android:layout_height="36sp"
             android:id="@+id/receive_name"
-            android:background="#ffffff"
+            android:background="@drawable/round_corner"
             >
         </EditText>
     </LinearLayout>
@@ -58,8 +58,8 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="36sp"
-            android:background="#ffffff"
             android:id="@+id/rereceiver_name"
+            android:background="@drawable/round_corner"
             >
         </EditText>
 
@@ -82,8 +82,9 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="36sp"
-            android:background="#ffffff"
+            android:background="@drawable/round_corner"
             android:id="@+id/transfer_token_num"
+
             >
         </EditText>
 
@@ -96,7 +97,9 @@
         android:id="@+id/transfer_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Confirm"></Button>
+        android:text="Confirm"
+        android:background="@drawable/round_corner"
+        ></Button>
 
 
 

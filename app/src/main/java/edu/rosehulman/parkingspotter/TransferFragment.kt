@@ -14,7 +14,7 @@ import kotlinx.android.synthetic.main.fragment_transfer.view.*
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val ARG_UID = "uid"
-private const val ARG_PARAM2 = "param2"
+private const val ARG_EMAIL = "email"
 
 /**
  * A simple [Fragment] subclass.
@@ -28,11 +28,12 @@ class TransferFragment : Fragment() {
     val auth = FirebaseAuth.getInstance()
     private var listener: OnFragmentInteractionListener? = null
     private var uid: String? = null
+    private var email: String? = null
     private var tokenRef: ListenerRegistration? = null
     private var tokenList = ArrayList<Token>()
 
-    private var userRef: ListenerRegistration? = null
-    private var userList = ArrayList<User>()
+//    private var userRef: ListenerRegistration? = null
+//    private var userList = ArrayList<User>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,21 +55,21 @@ class TransferFragment : Fragment() {
                 }
             }
         }
-        userRef = FirebaseFirestore.getInstance().collection("Users").addSnapshotListener{ snapshot: QuerySnapshot?, exception: FirebaseFirestoreException? ->
-            if(exception != null){
-            }
-            for (docChange in snapshot!!.documentChanges){
-                val user = User.fromSnapshot(docChange.document)
-                when(docChange.type){
-                    DocumentChange.Type.ADDED -> {
-                        userList.add(0,user)
-                    }
-//                    DocumentChange.Type.REMOVED -> {
-//                        tokenList.removeAt(0)
+//        userRef = FirebaseFirestore.getInstance().collection("Users").addSnapshotListener{ snapshot: QuerySnapshot?, exception: FirebaseFirestoreException? ->
+//            if(exception != null){
+//            }
+//            for (docChange in snapshot!!.documentChanges){
+//                val user = User.fromSnapshot(docChange.document)
+//                when(docChange.type){
+//                    DocumentChange.Type.ADDED -> {
+//                        userList.add(0,user)
 //                    }
-                }
-            }
-        }
+////                    DocumentChange.Type.REMOVED -> {
+////                        tokenList.removeAt(0)
+////                    }
+//                }
+//            }
+//        }
     }
 
     override fun onCreateView(
@@ -135,11 +136,11 @@ class TransferFragment : Fragment() {
          */
         // TODO: Rename and change types and number of parameters
         @JvmStatic
-        fun newInstance(uid: String) =
+        fun newInstance(uid: String, email: String) =
            TransferFragment().apply {
                 arguments = Bundle().apply {
                     putString(ARG_UID, uid)
-
+                    putString(ARG_EMAIL, email)
                 }
             }
     }

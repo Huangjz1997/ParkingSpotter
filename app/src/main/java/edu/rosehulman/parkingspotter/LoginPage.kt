@@ -1,10 +1,8 @@
 package edu.rosehulman.parkingspotter
-import android.app.PendingIntent.getActivity
-import android.content.Context
+
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.widget.Button
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
@@ -28,6 +26,7 @@ class LoginPage : AppCompatActivity() {
                 uid = user.uid
                 val myIntent = Intent(this, ContentHolder::class.java)
                 myIntent.putExtra("uid", user.uid);
+                myIntent.putExtra("email", user.email);
                 startActivity(myIntent)
             }
         }
@@ -69,6 +68,7 @@ class LoginPage : AppCompatActivity() {
                     uid = it.user!!.uid
                     val myIntent = Intent(this, ContentHolder::class.java)
                     myIntent.putExtra("uid", it.user!!.uid);
+                    myIntent.putExtra("email", it.user!!.email);
                     startActivity(myIntent)
 
             }.addOnFailureListener{

@@ -4,7 +4,7 @@ import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.Exclude
 
 class Token
-constructor(var uid : String = " "){
+constructor(var uid : String = " ", var userEmail : String = " "){
     @get: Exclude
     var id = ""
     companion object{
