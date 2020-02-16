@@ -44,6 +44,14 @@ class ContentHolder : AppCompatActivity(), HomeFragment.OnFragmentInteractionLis
             ft.commit()
             ft.addToBackStack(null);
         }
+        else if(flag == 4){
+            val ft = supportFragmentManager.beginTransaction()
+            ft.setCustomAnimations(android.R.anim.fade_in,android.R.anim.fade_out,android.R.anim.fade_in,
+                android.R.anim.fade_out)
+            ft.replace(R.id.main_content, HomeFragment.newInstance(uid)).addToBackStack(null)
+            ft.commit()
+            ft.addToBackStack(null);
+        }
         else{
             val ft = supportFragmentManager.beginTransaction()
             ft.setCustomAnimations(android.R.anim.fade_in,android.R.anim.fade_out,android.R.anim.fade_in,

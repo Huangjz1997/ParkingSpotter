@@ -35,7 +35,7 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="36sp"
-            android:id="@+id/receive_name"
+            android:id="@+id/receiver_email"
             android:background="@drawable/round_corner"
             >
         </EditText>

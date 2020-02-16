@@ -82,24 +82,28 @@ class GetFragment : Fragment() {
             { _, which ->
                 when (which) {
                     0 -> {
-                        "Speed Side"
-                        update(view, "SpeedSide")
+                        "Speed Main Lot"
+                        update(view, "Speed Main Lot")
                     }
                     1 -> {
-                        "Speed Main"
-                        update(view, "SpeedMain")
+                        "Percopo Small Lot"
+                        update(view, "Percopo Small Lot")
                     }
                     2 -> {
-                        "Precopo Main"
-                        update(view, "PrecopoMain")
+                        "Percopo Main Lot"
+                        update(view, "Percopo Main Lot")
                     }
                     3 -> {
-                        "SRC Main"
-                        update(view, "SRCMain")
+                        "Cook Lot"
+                        update(view, "Cook Lot")
                     }
                     4 -> {
-                        "SRC Back"
-                        update(view, "SRCBack")
+                        "SRC West Lot"
+                        update(view, "SRC West Lot")
+                    }
+                    5 -> {
+                        "Lower Moench Lot"
+                        update(view, "Lower Moench Lot")
                     }
                     else -> "None"
                 }
@@ -161,7 +165,7 @@ class GetFragment : Fragment() {
         view.selectGetButton.text = "Current Parking Lot: ${lot}"
         view.get_row.text = "Row: "
         view.get_column.text = "Column: "
-        spotRef = FirebaseFirestore.getInstance().collection(lot)
+        spotRef = FirebaseFirestore.getInstance().collection(lot.replace("\\s".toRegex(),""))
             .addSnapshotListener { snapshot: QuerySnapshot?, exception: FirebaseFirestoreException? ->
                 if (exception != null) {
                 }

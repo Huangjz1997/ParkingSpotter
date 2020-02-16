@@ -3,13 +3,21 @@ package edu.rosehulman.parkingspotter
 import android.content.Context
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.Toast
+
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.*
 import kotlinx.android.synthetic.main.fragment_transfer.view.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -28,19 +36,21 @@ class TransferFragment : Fragment() {
     val auth = FirebaseAuth.getInstance()
     private var listener: OnFragmentInteractionListener? = null
     private var uid: String? = null
-    private var email: String? = null
-    private var tokenRef: ListenerRegistration? = null
+    private var tokenRef = FirebaseFirestore.getInstance().collection("Tokens")
     private var tokenList = ArrayList<Token>()
 
-//    private var userRef: ListenerRegistration? = null
-//    private var userList = ArrayList<User>()
+    private var userRef = FirebaseFirestore.getInstance().collection("Users")
+    private var userList = ArrayList<User>()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
             uid = it.getString(ARG_UID)
         }
-        tokenRef = FirebaseFirestore.getInstance().collection("Tokens").whereEqualTo("uid",uid).addSnapshotListener{ snapshot: QuerySnapshot?, exception: FirebaseFirestoreException? ->
+        tokenRef
+            .whereEqualTo("uid",uid)
+            .addSnapshotListener{ snapshot: QuerySnapshot?, exception: FirebaseFirestoreException? ->
             if(exception != null){
             }
             for (docChange in snapshot!!.documentChanges){
@@ -55,21 +65,21 @@ class TransferFragment : Fragment() {
                 }
             }
         }
-//        userRef = FirebaseFirestore.getInstance().collection("Users").addSnapshotListener{ snapshot: QuerySnapshot?, exception: FirebaseFirestoreException? ->
-//            if(exception != null){
-//            }
-//            for (docChange in snapshot!!.documentChanges){
-//                val user = User.fromSnapshot(docChange.document)
-//                when(docChange.type){
-//                    DocumentChange.Type.ADDED -> {
-//                        userList.add(0,user)
-//                    }
-////                    DocumentChange.Type.REMOVED -> {
-////                        tokenList.removeAt(0)
-////                    }
-//                }
-//            }
-//        }
+        userRef
+            .addSnapshotListener{ snapshot: QuerySnapshot?, exception: FirebaseFirestoreException? ->
+            if(exception != null){
+            }
+            for (docChange in snapshot!!.documentChanges){
+                val user = User.fromSnapshot(docChange.document)
+                when(docChange.type){
+                    DocumentChange.Type.ADDED -> {
+                        userList.add(0,user)
+//                        notifyItemInserted(0)
+                    }
+
+                }
+            }
+        }
     }
 
     override fun onCreateView(
@@ -78,15 +88,55 @@ class TransferFragment : Fragment() {
     ): View? {
         val view =  inflater.inflate(R.layout.fragment_transfer, container, false)
 
-        var receiverName = view.receive_name
+        var receiverEmail = view.receiver_email
         var numToken = view.transfer_token_num
 
-        transfer(receiverName.toString(),numToken.toString())
+
+        view.findViewById<Button>(R.id.transfer_button).setOnClickListener{
+            if(receiverEmail.text.toString() == "" || numToken.text.toString() == ""){
+                Toast.makeText(this.context,"Please enter Receiver Name/Token num!", Toast.LENGTH_SHORT).show()
+            }else{
+                transfer(receiverEmail.text.toString(),numToken.text.toString())
+            }
+
+        }
 
         return view
     }
 
-    fun transfer(receiverName:String, numToken:String){
+    fun transfer(receiverEmail: String, numToken: String){
+        var count = 0
+        if(numToken.toInt() > tokenList.size){
+            Toast.makeText(this.context,"You don't have enough tokens to transfer!", Toast.LENGTH_SHORT).show()
+        }
+        else if(!userList.any{ it->
+                it.userEmail == receiverEmail }){
+            Toast.makeText(this.context,"User does not exist!", Toast.LENGTH_SHORT).show()
+        }
+
+
+        else{
+            val user: User? = userList.find { it.userEmail == receiverEmail }
+
+
+
+            GlobalScope.launch {
+                for(i in 0 until numToken.toInt()){
+                    tokenRef.document(tokenList[0].id).delete()
+                }
+                withContext(Dispatchers.Main)
+                {
+                    for(i in 0 until numToken.toInt()){
+                        tokenRef.add(Token(user!!.uid,receiverEmail))
+                    }
+                }
+            }
+
+
+
+
+            listener!!.onFragmentInteraction(4)
+        }
 
     }
 
