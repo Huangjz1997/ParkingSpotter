@@ -65,7 +65,7 @@
                 android:layout_width="match_parent"
                 android:layout_margin="50dp"
                 android:layout_height= "100dp"
-                android:background="@color/colorRose"
+                android:background="@drawable/round_corner_red"
                 android:orientation="vertical"
                 android:text="GET"
                 android:textSize="50dp"

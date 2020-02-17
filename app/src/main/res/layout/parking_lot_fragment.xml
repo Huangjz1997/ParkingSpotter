@@ -110,7 +110,7 @@
                     android:text="Report"
                     android:textSize="20sp"
                     android:layout_alignParentEnd="true"
-                    android:background="@color/colorRose"
+                    android:background="@drawable/round_corner_red"
                     android:textColor="#FFFFFF"
                     ></Button>
             </RelativeLayout>
