@@ -49,54 +49,65 @@ class TransferFragment : Fragment() {
             uid = it.getString(ARG_UID)
         }
         tokenRef
-            .whereEqualTo("uid",uid)
-            .addSnapshotListener{ snapshot: QuerySnapshot?, exception: FirebaseFirestoreException? ->
-            if(exception != null){
-            }
-            for (docChange in snapshot!!.documentChanges){
-                val token = Token.fromSnapshot(docChange.document)
-                when(docChange.type){
-                    DocumentChange.Type.ADDED -> {
-                        tokenList.add(0,token)
-                    }
-                    DocumentChange.Type.REMOVED -> {
-                        tokenList.removeAt(0)
+            .whereEqualTo("uid", uid)
+            .addSnapshotListener { snapshot: QuerySnapshot?, exception: FirebaseFirestoreException? ->
+                if (exception != null) {
+                }
+                for (docChange in snapshot!!.documentChanges) {
+                    val token = Token.fromSnapshot(docChange.document)
+                    when (docChange.type) {
+                        DocumentChange.Type.ADDED -> {
+                            tokenList.add(0, token)
+                        }
+                        DocumentChange.Type.REMOVED -> {
+                            tokenList.removeAt(0)
+                        }
                     }
                 }
             }
-        }
         userRef
-            .addSnapshotListener{ snapshot: QuerySnapshot?, exception: FirebaseFirestoreException? ->
-            if(exception != null){
-            }
-            for (docChange in snapshot!!.documentChanges){
-                val user = User.fromSnapshot(docChange.document)
-                when(docChange.type){
-                    DocumentChange.Type.ADDED -> {
-                        userList.add(0,user)
+            .addSnapshotListener { snapshot: QuerySnapshot?, exception: FirebaseFirestoreException? ->
+                if (exception != null) {
+                }
+                for (docChange in snapshot!!.documentChanges) {
+                    val user = User.fromSnapshot(docChange.document)
+                    when (docChange.type) {
+                        DocumentChange.Type.ADDED -> {
+                            userList.add(0, user)
 //                        notifyItemInserted(0)
-                    }
+                        }
 
+                    }
                 }
             }
-        }
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view =  inflater.inflate(R.layout.fragment_transfer, container, false)
+        val view = inflater.inflate(R.layout.fragment_transfer, container, false)
 
         var receiverEmail = view.receiver_email
+        var rereceiverEmail = view.rereceiver_email
         var numToken = view.transfer_token_num
 
 
-        view.findViewById<Button>(R.id.transfer_button).setOnClickListener{
-            if(receiverEmail.text.toString() == "" || numToken.text.toString() == ""){
-                Toast.makeText(this.context,"Please enter Receiver Name/Token num!", Toast.LENGTH_SHORT).show()
-            }else{
-                transfer(receiverEmail.text.toString(),numToken.text.toString())
+        view.findViewById<Button>(R.id.transfer_button).setOnClickListener {
+            if (receiverEmail.text.toString() == "" || numToken.text.toString() == "") {
+                Toast.makeText(
+                    this.context,
+                    "Please enter Receiver Name/Token num!",
+                    Toast.LENGTH_SHORT
+                ).show()
+            } else if (rereceiverEmail.text.toString() != receiverEmail.text.toString()) {
+                Toast.makeText(
+                    this.context,
+                    "Receiver Emails don't match!",
+                    Toast.LENGTH_SHORT
+                ).show()
+            } else {
+                transfer(receiverEmail.text.toString(), numToken.text.toString())
             }
 
         }
@@ -104,36 +115,38 @@ class TransferFragment : Fragment() {
         return view
     }
 
-    fun transfer(receiverEmail: String, numToken: String){
+    fun transfer(receiverEmail: String, numToken: String) {
         var count = 0
-        if(numToken.toInt() > tokenList.size){
-            Toast.makeText(this.context,"You don't have enough tokens to transfer!", Toast.LENGTH_SHORT).show()
-        }
-        else if(!userList.any{ it->
-                it.userEmail == receiverEmail }){
-            Toast.makeText(this.context,"User does not exist!", Toast.LENGTH_SHORT).show()
-        }
-
-
-        else{
+        if (numToken.toInt() > tokenList.size) {
+            Toast.makeText(
+                this.context,
+                "You don't have enough tokens to transfer!",
+                Toast.LENGTH_SHORT
+            ).show()
+        } else if (!userList.any { it ->
+                it.userEmail == receiverEmail
+            }) {
+            Toast.makeText(this.context, "User does not exist!", Toast.LENGTH_SHORT).show()
+        } else {
             val user: User? = userList.find { it.userEmail == receiverEmail }
 
 
+//            GlobalScope.launch {
+//                for(i in 0 until numToken.toInt()){
+//                    tokenRef.document(tokenList[0].id).delete()
+//                }
+//                withContext(Dispatchers.Main)
+//                {
+//                    for(i in 0 until numToken.toInt()){
+//                        tokenRef.add(Token(user!!.uid,receiverEmail))
+//                    }
+//                }
+//            }
 
-            GlobalScope.launch {
-                for(i in 0 until numToken.toInt()){
-                    tokenRef.document(tokenList[0].id).delete()
-                }
-                withContext(Dispatchers.Main)
-                {
-                    for(i in 0 until numToken.toInt()){
-                        tokenRef.add(Token(user!!.uid,receiverEmail))
-                    }
-                }
+            while (count != numToken.toInt()) {
+                tokenRef.document(tokenList[count].id).set(Token(user!!.uid, receiverEmail))
+                count++
             }
-
-
-
 
             listener!!.onFragmentInteraction(4)
         }
@@ -187,7 +200,7 @@ class TransferFragment : Fragment() {
         // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(uid: String, email: String) =
-           TransferFragment().apply {
+            TransferFragment().apply {
                 arguments = Bundle().apply {
                     putString(ARG_UID, uid)
                     putString(ARG_EMAIL, email)

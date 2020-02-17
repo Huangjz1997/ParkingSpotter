@@ -42,7 +42,8 @@
                 android:layout_height="36sp"
                 android:id="@+id/username"
                 android:background="@drawable/round_corner"
-
+                android:maxLines="1"
+                android:paddingLeft="5dp"
                 >
 
             </EditText>
@@ -67,6 +68,9 @@
                 android:layout_height="36sp"
                 android:background="@drawable/round_corner"
                 android:id="@+id/password"
+                android:inputType="textPassword"
+                android:maxLines="1"
+                android:paddingLeft="5dp"
                 >
             </EditText>
 

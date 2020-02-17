@@ -17,22 +17,38 @@ class RegisterPage : AppCompatActivity() {
         setContentView(R.layout.activity_register_page)
         supportActionBar!!.hide()
 
-        var button: Button =  findViewById(R.id.registeruser)
-        button.setOnClickListener(){
+        var button: Button = findViewById(R.id.registeruser)
+        button.setOnClickListener() {
             val username = registerusername.text;
             val password = registerpassword.text;
-            register(username.toString(),password.toString())
+            val repassword = reregisterpassword.text
+            if (password.toString() == "" || username.toString() == "") {
+                Toast.makeText(
+                    this,
+                    "Please enter Receiver Name/Token num!",
+                    Toast.LENGTH_SHORT
+                ).show()
+            } else if (repassword.toString() != password.toString()) {
+                Toast.makeText(
+                    this,
+                    "Passwords don't match!",
+                    Toast.LENGTH_SHORT
+                ).show()
+            } else {
+                register(username.toString(), password.toString())
+            }
+
         }
     }
 
-    fun register(username:String, password:String){
-         auth.createUserWithEmailAndPassword(username,password).addOnSuccessListener {
-             val myIntent = Intent(this, ContentHolder::class.java)
-             myIntent.putExtra("uid", it.user!!.uid);
-             myIntent.putExtra("email", it.user!!.email);
-             startActivity(myIntent)
-        }.addOnFailureListener{
-            Toast.makeText(this,"Register error!", Toast.LENGTH_SHORT).show()
+    fun register(username: String, password: String) {
+        auth.createUserWithEmailAndPassword(username, password).addOnSuccessListener {
+            val myIntent = Intent(this, ContentHolder::class.java)
+            myIntent.putExtra("uid", it.user!!.uid);
+            myIntent.putExtra("email", it.user!!.email);
+            startActivity(myIntent)
+        }.addOnFailureListener {
+            Toast.makeText(this, "Register error!", Toast.LENGTH_SHORT).show()
         }
     }
 }

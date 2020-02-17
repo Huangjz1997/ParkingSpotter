@@ -29,7 +29,7 @@
             android:textColor="#ffffff"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Receiver Name"
+            android:text="Receiver Email"
             android:textSize="32sp"
             ></TextView>
         <EditText
@@ -37,6 +37,8 @@
             android:layout_height="36sp"
             android:id="@+id/receiver_email"
             android:background="@drawable/round_corner"
+            android:maxLines="1"
+            android:paddingLeft="5dp"
             >
         </EditText>
     </LinearLayout>
@@ -52,14 +54,16 @@
             android:textColor="#ffffff"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Re-enter Receiver Name"
+            android:text="Re-enter Receiver Email"
             android:textSize="32sp"
             ></TextView>
         <EditText
             android:layout_width="match_parent"
             android:layout_height="36sp"
-            android:id="@+id/rereceiver_name"
+            android:id="@+id/rereceiver_email"
             android:background="@drawable/round_corner"
+            android:maxLines="1"
+            android:paddingLeft="5dp"
             >
         </EditText>
 
@@ -84,7 +88,8 @@
             android:layout_height="36sp"
             android:background="@drawable/round_corner"
             android:id="@+id/transfer_token_num"
-
+            android:maxLines="1"
+            android:paddingLeft="5dp"
             >
         </EditText>
 

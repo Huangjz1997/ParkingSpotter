@@ -44,6 +44,8 @@
                 android:layout_height="36sp"
                 android:background="@drawable/round_corner"
                 android:id="@+id/registerusername"
+                android:maxLines="1"
+                android:paddingLeft="5dp"
                 >
 
             </EditText>
@@ -69,6 +71,9 @@
                 android:layout_height="36sp"
                 android:background="@drawable/round_corner"
                 android:id="@+id/registerpassword"
+                android:inputType="textPassword"
+                android:maxLines="1"
+                android:paddingLeft="5dp"
                 >
             </EditText>
 
@@ -93,7 +98,11 @@
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="36sp"
+                android:id="@+id/reregisterpassword"
                 android:background="@drawable/round_corner"
+                android:inputType="textPassword"
+                android:maxLines="1"
+                android:paddingLeft="5dp"
                 >
             </EditText>
 
@@ -118,6 +127,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="36sp"
                 android:background="@drawable/round_corner"
+
                 >
             </EditText>
 

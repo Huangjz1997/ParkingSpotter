@@ -103,7 +103,7 @@
                 android:layout_height="100dp"
                 android:layout_gravity="center"
                 android:layout_marginBottom="29dp"
-                android:background="@color/colorRose"
+                android:background="@drawable/round_corner_red"
                 android:text="Post"
                 android:textColor="#FFFFFF"
                 android:textSize="20sp"></Button>
@@ -114,7 +114,7 @@
                 android:layout_height="100dp"
                 android:layout_gravity="center"
                 android:layout_marginBottom="29dp"
-                android:background="@color/colorRose"
+                android:background="@drawable/round_corner_red"
                 android:text="Get"
                 android:textColor="#FFFFFF"
                 android:textSize="20sp"></Button>
@@ -125,7 +125,7 @@
                 android:layout_height="100dp"
                 android:layout_gravity="center"
 
-                android:background="@color/colorRose"
+                android:background="@drawable/round_corner_red"
                 android:text="Transfer"
                 android:textColor="#FFFFFF"
                 android:textSize="20sp"></Button>
