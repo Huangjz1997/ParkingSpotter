@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.Toast
 import com.google.firebase.firestore.DocumentChange
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.*
@@ -137,6 +138,10 @@ class ParkingLotFragment : Fragment() {
         view.parking_lot_name.setText("Report a free space at ${lotTitle}")
 
         view.lotMap.setImageResource(lotmapImage!!);
+        view.lotMap.setOnClickListener{
+            listener!!.onMapZoom(lotNum!!)
+        }
+
         FirebaseFirestore.getInstance().collection("Tokens").whereEqualTo("uid",uid).get().addOnCompleteListener { task ->
             if (task.isSuccessful) {
                 view.speedside_token.text = "My current tokens: ".plus(task.result!!.size().toString())
@@ -147,11 +152,25 @@ class ParkingLotFragment : Fragment() {
     }
 
     fun updateReport(row: Number, col: Number) {
-        rownum.text = "row: ".plus(row.toString())
-        colnum.text = "column: ".plus(col.toString())
 
-        FirebaseFirestore.getInstance().collection(lotName!!).add(Spot(row.toString(), col.toString(), uid!!))
-        FirebaseFirestore.getInstance().collection("Tokens").add(Token(uid!!, email!!))
+
+        if(spotList.any { it ->
+                it.row == row.toString() && it.column == col.toString()
+            }){
+            Toast.makeText(
+                this.context,
+                "This spot has been reported!",
+                Toast.LENGTH_SHORT
+            ).show()
+        }else{
+            rownum.text = "row: ".plus(row.toString())
+            colnum.text = "column: ".plus(col.toString())
+
+            FirebaseFirestore.getInstance().collection(lotName!!)
+                .add(Spot(row.toString(), col.toString(), uid!!))
+            FirebaseFirestore.getInstance().collection("Tokens")
+                .add(Token(uid!!, email!!))
+        }
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -187,6 +206,8 @@ class ParkingLotFragment : Fragment() {
     interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         fun onFragmentInteraction(flag: Int)
+
+        fun onMapZoom(map: Int)
     }
 
     companion object {

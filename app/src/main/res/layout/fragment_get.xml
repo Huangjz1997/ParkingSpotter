@@ -38,7 +38,7 @@
             android:background="#C4C4C4"
             android:gravity="center"
             android:padding="10dp"
-            android:text="Welcome Jizhou!"
+            android:text="Welcome!"
             android:textColor="#000000"
             android:textSize="20sp"></TextView>
 

@@ -130,19 +130,6 @@ class TransferFragment : Fragment() {
         } else {
             val user: User? = userList.find { it.userEmail == receiverEmail }
 
-
-//            GlobalScope.launch {
-//                for(i in 0 until numToken.toInt()){
-//                    tokenRef.document(tokenList[0].id).delete()
-//                }
-//                withContext(Dispatchers.Main)
-//                {
-//                    for(i in 0 until numToken.toInt()){
-//                        tokenRef.add(Token(user!!.uid,receiverEmail))
-//                    }
-//                }
-//            }
-
             while (count != numToken.toInt()) {
                 tokenRef.document(tokenList[count].id).set(Token(user!!.uid, receiverEmail))
                 count++

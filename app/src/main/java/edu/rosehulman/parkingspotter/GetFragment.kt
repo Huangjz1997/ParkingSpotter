@@ -73,6 +73,10 @@ class GetFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_get, container, false)
         var getButton = view.findViewById<Button>(R.id.getbut)
         var selectButton = view.findViewById<Button>(R.id.selectGetButton)
+        val gotoConfirmButton: Button = view.findViewById(R.id.gotoConfirm)
+
+        gotoConfirmButton.setBackgroundResource(R.drawable.round_corner_grey)
+        getButton.setBackgroundResource(R.drawable.round_corner_grey)
 
         selectButton.setOnClickListener {
             val builder = AlertDialog.Builder(this.context!!)
@@ -111,10 +115,7 @@ class GetFragment : Fragment() {
             builder.create().show()
         }
 
-        val gotoConfirmButton: Button = view.findViewById(R.id.gotoConfirm)
-        gotoConfirmButton.setOnClickListener{
-            listener!!.onFragmentInteraction(5);
-        }
+
 
         getButton.setOnClickListener {
             if (parkLotName === "None") {
@@ -133,12 +134,19 @@ class GetFragment : Fragment() {
                     builder.create().show()
                 }
                 else{
+                    gotoConfirmButton.isEnabled = true
                     val spot = spotList.get(nextInt(0, spotList.size!!))
-
-                    FirebaseFirestore.getInstance().collection(parkLotName.toString().replace("\\s".toRegex(),"")).document(spot.id).delete()
-
                     view.get_row.text = "Row: ".plus(spot.row)
                     view.get_column.text = "Column: ".plus(spot.column)
+                    FirebaseFirestore.getInstance().collection(parkLotName.toString().
+                        replace("\\s".toRegex(),"")).document(spot.id).delete()
+
+                    gotoConfirmButton.setBackgroundResource(R.drawable.round_corner_red)
+                    gotoConfirmButton.setOnClickListener{
+                        listener!!.onFragmentInteraction(5);
+                    }
+
+
                     FirebaseFirestore.getInstance().collection("Tokens").document(tokenList[0].id).delete().addOnSuccessListener {
                         FirebaseFirestore.getInstance().collection("Tokens").whereEqualTo("uid",uid).get().addOnCompleteListener { task ->
                             if (task.isSuccessful) {
@@ -173,6 +181,7 @@ class GetFragment : Fragment() {
         view.selectGetButton.text = "Current Parking Lot: ${lot}"
         view.get_row.text = "Row: "
         view.get_column.text = "Column: "
+        view.getbut.setBackgroundResource(R.drawable.round_corner_red)
         spotRef = FirebaseFirestore.getInstance().collection(lot.replace("\\s".toRegex(),""))
             .addSnapshotListener { snapshot: QuerySnapshot?, exception: FirebaseFirestoreException? ->
                 if (exception != null) {

@@ -9,8 +9,18 @@ import com.google.firebase.auth.FirebaseAuth
 
 class ContentHolder : AppCompatActivity(), HomeFragment.OnFragmentInteractionListener,
     PostFragment.OnFragmentInteractionListener, GetFragment.OnFragmentInteractionListener, ParkingLotFragment.OnFragmentInteractionListener,
-        TransferFragment.OnFragmentInteractionListener,ConfirmFragment.OnFragmentInteractionListener
+        TransferFragment.OnFragmentInteractionListener,
+        ConfirmFragment.OnFragmentInteractionListener, MapFragment.OnFragmentInteractionListener
 {
+    override fun onMapZoom(map: Int) {
+        val ft = supportFragmentManager.beginTransaction()
+        ft.setCustomAnimations(android.R.anim.fade_in,android.R.anim.fade_out,android.R.anim.fade_in,
+            android.R.anim.fade_out)
+        ft.replace(R.id.main_content, MapFragment.newInstance(map)).addToBackStack("map")
+        ft.commit()
+        ft.addToBackStack("map");
+    }
+
     lateinit var uid : String
     lateinit var email : String
     val auth = FirebaseAuth.getInstance()
@@ -55,10 +65,11 @@ class ContentHolder : AppCompatActivity(), HomeFragment.OnFragmentInteractionLis
             val ft = supportFragmentManager.beginTransaction()
             ft.setCustomAnimations(android.R.anim.fade_in,android.R.anim.fade_out,android.R.anim.fade_in,
                     android.R.anim.fade_out)
-            ft.replace(R.id.main_content, ConfirmFragment.newInstance(uid,email)).addToBackStack(null)
+            ft.replace(R.id.main_content, ConfirmFragment.newInstance(uid,email)).addToBackStack("confirm")
             ft.commit()
-            ft.addToBackStack(null);
+            ft.addToBackStack("confirm");
         }
+
         else{
             val ft = supportFragmentManager.beginTransaction()
             ft.setCustomAnimations(android.R.anim.fade_in,android.R.anim.fade_out,android.R.anim.fade_in,
@@ -94,13 +105,6 @@ class ContentHolder : AppCompatActivity(), HomeFragment.OnFragmentInteractionLis
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         return when (item.itemId) {
-
-//            R.id.log_out -> {
-//                auth.signOut()
-//                val myIntent = Intent(this, LoginPage::class.java)
-//                startActivity(myIntent)
-//                true
-//            }
 
             else -> super.onOptionsItemSelected(item)
         }
