@@ -51,6 +51,13 @@ class ContentHolder : AppCompatActivity(), HomeFragment.OnFragmentInteractionLis
             ft.replace(R.id.main_content, HomeFragment.newInstance(uid)).addToBackStack(null)
             ft.commit()
             ft.addToBackStack(null);
+        }else if(flag == 5){
+            val ft = supportFragmentManager.beginTransaction()
+            ft.setCustomAnimations(android.R.anim.fade_in,android.R.anim.fade_out,android.R.anim.fade_in,
+                    android.R.anim.fade_out)
+            ft.replace(R.id.main_content, ConfirmFragment.newInstance(uid,email)).addToBackStack(null)
+            ft.commit()
+            ft.addToBackStack(null);
         }
         else{
             val ft = supportFragmentManager.beginTransaction()
@@ -99,13 +106,4 @@ class ContentHolder : AppCompatActivity(), HomeFragment.OnFragmentInteractionLis
         }
     }
 
-    override fun onFragmentInteraction(slotId: String, slotName: String) {
-            val ft = supportFragmentManager.beginTransaction()
-            ft.setCustomAnimations(android.R.anim.fade_in,android.R.anim.fade_out,android.R.anim.fade_in,
-                    android.R.anim.fade_out)
-            ft.replace(R.id.main_content, ConfirmFragment.newInstance(slotId, slotName)).addToBackStack(null)
-            ft.commit()
-            ft.addToBackStack(null);
-
-    }
 }

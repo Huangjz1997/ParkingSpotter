@@ -1,18 +1,23 @@
 package edu.rosehulman.parkingspotter
 
 import android.content.Context
-import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import androidx.fragment.app.Fragment
+import com.google.firebase.firestore.DocumentChange
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.FirebaseFirestoreException
+import com.google.firebase.firestore.QuerySnapshot
+import kotlinx.android.synthetic.main.parking_lot_fragment.view.*
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
+private const val ARG_UID = "uid"
+private const val ARG_EMAIL = "email"
 /**
  * A simple [Fragment] subclass.
  * Activities that contain this fragment must implement the
@@ -23,29 +28,60 @@ private const val ARG_PARAM2 = "param2"
  */
 class ConfirmFragment : Fragment() {
     // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+    private var uid: String? = null
+    private var email: String? = null
     private var listener: OnFragmentInteractionListener? = null
+    private val tokenRef = FirebaseFirestore.getInstance().collection("Tokens")
+    private var tokenList = ArrayList<Token>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+            uid = it.getString(ARG_UID)
+            email = it.getString(ARG_EMAIL)
         }
+
+        tokenRef.addSnapshotListener{ snapshot: QuerySnapshot?, exception: FirebaseFirestoreException? ->
+            if(exception != null){
+            }
+            for (docChange in snapshot!!.documentChanges){
+                val token = Token.fromSnapshot(docChange.document)
+                when(docChange.type){
+                    DocumentChange.Type.ADDED -> {
+                        tokenList.add(0,token)
+                    }
+                }
+            }
+        }
+
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_confirm, container, false)
+        var view =  inflater.inflate(R.layout.fragment_confirm, container, false)
+
+        val confirmButton: Button = view.findViewById(R.id.confirm_slot)
+        confirmButton.setOnClickListener{
+            listener!!.onFragmentInteraction(2);
+
+        }
+
+        val denyButton: Button = view.findViewById(R.id.deny_slot)
+        denyButton.setOnClickListener{
+            FirebaseFirestore.getInstance().collection("Tokens").add(Token(uid!!, email!!))
+
+            listener!!.onFragmentInteraction(2);
+
+        }
+
+        return view
     }
 
     // TODO: Rename method, update argument and hook method into UI event
-    fun onButtonPressed(slotId: String,slotName: String) {
-        listener?.onFragmentInteraction(slotId, slotName)
+    fun onButtonPressed(flag: Int) {
+        listener?.onFragmentInteraction(flag)
     }
-
     override fun onAttach(context: Context) {
         super.onAttach(context)
         if (context is OnFragmentInteractionListener) {
@@ -73,7 +109,7 @@ class ConfirmFragment : Fragment() {
      */
     interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
-        fun onFragmentInteraction(slotId:String, slotName:String)
+        fun onFragmentInteraction(flag:Int)
     }
 
     companion object {
@@ -87,11 +123,11 @@ class ConfirmFragment : Fragment() {
          */
         // TODO: Rename and change types and number of parameters
         @JvmStatic
-        fun newInstance(spotId: String, lotName: String) =
+        fun newInstance(uid: String, email:String) =
                 ConfirmFragment().apply {
                     arguments = Bundle().apply {
-                        putString(ARG_PARAM1, spotId)
-                        putString(ARG_PARAM2, lotName)
+                        putString(ARG_UID, uid)
+                        putString(ARG_EMAIL, email)
                     }
                 }
     }

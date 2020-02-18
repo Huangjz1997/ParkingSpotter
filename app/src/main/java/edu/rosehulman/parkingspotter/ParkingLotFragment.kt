@@ -96,18 +96,7 @@ class ParkingLotFragment : Fragment() {
             }
         }
 
-        tokenRef = FirebaseFirestore.getInstance().collection("Tokens").addSnapshotListener { snapshot: QuerySnapshot?, exception: FirebaseFirestoreException? ->
-            if (exception != null) {
-            }
-            for (docChange in snapshot!!.documentChanges) {
-                val token = Token.fromSnapshot(docChange.document)
-                when (docChange.type) {
-                    DocumentChange.Type.ADDED -> {
-                        tokenList.add(0, token)
-                    }
-                }
-            }
-        }
+
 
     }
 

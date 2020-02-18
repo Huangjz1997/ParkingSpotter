@@ -111,6 +111,11 @@ class GetFragment : Fragment() {
             builder.create().show()
         }
 
+        val gotoConfirmButton: Button = view.findViewById(R.id.gotoConfirm)
+        gotoConfirmButton.setOnClickListener{
+            listener!!.onFragmentInteraction(5);
+        }
+
         getButton.setOnClickListener {
             if (parkLotName === "None") {
                 val builder = AlertDialog.Builder(this.context!!)
