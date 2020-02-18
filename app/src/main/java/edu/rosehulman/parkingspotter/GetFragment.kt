@@ -2,6 +2,7 @@ package edu.rosehulman.parkingspotter
 
 import android.content.Context
 import android.os.Bundle
+import android.telephony.SmsManager
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -10,6 +11,8 @@ import android.widget.Button
 import androidx.appcompat.app.AlertDialog
 import com.google.firebase.firestore.*
 import kotlinx.android.synthetic.main.fragment_get.view.*
+import kotlinx.android.synthetic.main.parking_lot_fragment.view.*
+import kotlinx.android.synthetic.main.report.view.*
 import kotlin.random.Random.Default.nextInt
 
 // TODO: Rename parameter arguments, choose names that match
@@ -37,6 +40,9 @@ class GetFragment : Fragment() {
     private var spotRef: ListenerRegistration? = null
     private var tokenRef: ListenerRegistration? = null
     private var tokenSize: Int? = 0
+    private var tempCol:Int? = null
+    private var tempRow:Int? = null
+
 
     init {
 
@@ -74,6 +80,7 @@ class GetFragment : Fragment() {
         var getButton = view.findViewById<Button>(R.id.getbut)
         var selectButton = view.findViewById<Button>(R.id.selectGetButton)
         val gotoConfirmButton: Button = view.findViewById(R.id.gotoConfirm)
+        var shareButton = view.findViewById<Button>(R.id.shareMess)
 
         gotoConfirmButton.setBackgroundResource(R.drawable.round_corner_grey)
         getButton.setBackgroundResource(R.drawable.round_corner_grey)
@@ -138,6 +145,10 @@ class GetFragment : Fragment() {
                     val spot = spotList.get(nextInt(0, spotList.size!!))
                     view.get_row.text = "Row: ".plus(spot.row)
                     view.get_column.text = "Column: ".plus(spot.column)
+
+                    tempRow = spot.row.toInt()
+                    tempCol = spot.column.toInt()
+
                     FirebaseFirestore.getInstance().collection(parkLotName.toString().
                         replace("\\s".toRegex(),"")).document(spot.id).delete()
 
@@ -160,12 +171,37 @@ class GetFragment : Fragment() {
             }
         }
 
+        shareButton.setOnClickListener{
+            val dialogBuilder = android.app.AlertDialog.Builder(this.context)
+            dialogBuilder.setTitle("Share this space")
+            dialogBuilder.setMessage("via SMS")
+            dialogBuilder.setCancelable(false)
+            val dialogView = LayoutInflater.from(this.context).inflate(R.layout.report, null, false)
+            dialogBuilder.setView(dialogView)
+            dialogView.report_row.hint = "Cell phone number"
+            dialogView.report_column.hint = "Reciever Name"
+            dialogBuilder.setNeutralButton("Cancel") { dialog, which ->
+                dialog.cancel()
+            }
+
+            dialogBuilder.setPositiveButton("Send") { _, _ ->
+                val number = dialogView.report_row.text.toString()
+                val name = dialogView.report_column.text.toString()
+
+                val smsManager = SmsManager.getDefault() as SmsManager
+                smsManager.sendTextMessage(number, null, name, null, null)
+
+            }
+            dialogBuilder.create().show()
+        }
+
         FirebaseFirestore.getInstance().collection("Tokens").whereEqualTo("uid",uid).get().addOnCompleteListener { task ->
             if (task.isSuccessful) {
                 tokenSize = task.result!!.size()
                 view.get_token.setText("My current tokens: ".plus(task.result!!.size().toString()))
             }
         }
+
         return view
     }
 

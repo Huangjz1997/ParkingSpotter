@@ -123,6 +123,21 @@
             android:text="Confirm the spot or report occupied"
             android:textColor="#ffffff"
             android:textSize="15dp">
+        </Button>
+
+        <Button
+            android:id="@+id/shareMess"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginTop = "30dp"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp"
+            android:background="@drawable/round_corner_red"
+            android:padding="3dp"
+            android:text="Share this space via SMS"
+            android:textColor="#ffffff"
+            android:textSize="15dp">
 
         </Button>
 
