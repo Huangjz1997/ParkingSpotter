@@ -3,10 +3,10 @@ package edu.rosehulman.parkingspotter
 import android.content.Context
 import android.net.Uri
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -42,8 +42,8 @@ class ConfirmFragment : Fragment() {
     }
 
     // TODO: Rename method, update argument and hook method into UI event
-    fun onButtonPressed(uri: Uri) {
-        listener?.onFragmentInteraction(uri)
+    fun onButtonPressed(slotId: String,slotName: String) {
+        listener?.onFragmentInteraction(slotId, slotName)
     }
 
     override fun onAttach(context: Context) {
@@ -73,7 +73,7 @@ class ConfirmFragment : Fragment() {
      */
     interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
-        fun onFragmentInteraction(uri: Uri)
+        fun onFragmentInteraction(slotId:String, slotName:String)
     }
 
     companion object {
@@ -87,11 +87,11 @@ class ConfirmFragment : Fragment() {
          */
         // TODO: Rename and change types and number of parameters
         @JvmStatic
-        fun newInstance(param1: String, param2: String) =
+        fun newInstance(spotId: String, lotName: String) =
                 ConfirmFragment().apply {
                     arguments = Bundle().apply {
-                        putString(ARG_PARAM1, param1)
-                        putString(ARG_PARAM2, param2)
+                        putString(ARG_PARAM1, spotId)
+                        putString(ARG_PARAM2, lotName)
                     }
                 }
     }

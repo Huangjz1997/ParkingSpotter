@@ -43,6 +43,8 @@ class ParkingLotFragment : Fragment() {
     private var tokenList = ArrayList<Token>()
     private var lotName:String? = null
     private var lotTitle:String? = null
+    private var lotmapImage: Int? = null
+
 
     init {
 
@@ -58,21 +60,27 @@ class ParkingLotFragment : Fragment() {
         if(lotNum == 11){
             lotName = "SpeedMainLot"
             lotTitle = "Speed Main Lot"
+            lotmapImage = R.drawable.speedmain
         }else if(lotNum == 12){
             lotName = "PercopoSmallLot"
             lotTitle = "Percopo Small Lot"
+            lotmapImage = R.drawable.precsmall
         }else if(lotNum == 13){
             lotName = "PercopoMainLot"
             lotTitle = "Percopo Main Lot"
+            lotmapImage = R.drawable.precmain
         }else if(lotNum == 14){
             lotName = "CookLot"
             lotTitle = "Cook Lot"
+            lotmapImage = R.drawable.cock
         }else if(lotNum == 15){
             lotName = "SRCWestLot"
             lotTitle = "SRC West Lot"
+            lotmapImage = R.drawable.srcwest
         }else if(lotNum == 16){
             lotName = "LowerMoenchLot"
             lotTitle = "Lower Moench Lot"
+            lotmapImage = R.drawable.lowmounch
         }
 
         spotRef = FirebaseFirestore.getInstance().collection(lotName!!).addSnapshotListener { snapshot: QuerySnapshot?, exception: FirebaseFirestoreException? ->
@@ -139,6 +147,7 @@ class ParkingLotFragment : Fragment() {
 
         view.parking_lot_name.setText("Report a free space at ${lotTitle}")
 
+        view.lotMap.setImageResource(lotmapImage!!);
         FirebaseFirestore.getInstance().collection("Tokens").whereEqualTo("uid",uid).get().addOnCompleteListener { task ->
             if (task.isSuccessful) {
                 view.speedside_token.text = "My current tokens: ".plus(task.result!!.size().toString())

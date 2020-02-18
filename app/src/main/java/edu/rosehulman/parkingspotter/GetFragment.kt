@@ -129,6 +129,9 @@ class GetFragment : Fragment() {
                 }
                 else{
                     val spot = spotList.get(nextInt(0, spotList.size!!))
+
+                    FirebaseFirestore.getInstance().collection(parkLotName.toString().replace("\\s".toRegex(),"")).document(spot.id).delete()
+
                     view.get_row.text = "Row: ".plus(spot.row)
                     view.get_column.text = "Column: ".plus(spot.column)
                     FirebaseFirestore.getInstance().collection("Tokens").document(tokenList[0].id).delete().addOnSuccessListener {
@@ -174,6 +177,9 @@ class GetFragment : Fragment() {
                     when (docChange.type) {
                         DocumentChange.Type.ADDED -> {
                             spotList.add(0, spot)
+                        }
+                        DocumentChange.Type.REMOVED -> {
+                            spotList.remove(spot)
                         }
                     }
                 }

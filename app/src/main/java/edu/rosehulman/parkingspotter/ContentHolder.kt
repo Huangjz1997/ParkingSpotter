@@ -9,7 +9,7 @@ import com.google.firebase.auth.FirebaseAuth
 
 class ContentHolder : AppCompatActivity(), HomeFragment.OnFragmentInteractionListener,
     PostFragment.OnFragmentInteractionListener, GetFragment.OnFragmentInteractionListener, ParkingLotFragment.OnFragmentInteractionListener,
-        TransferFragment.OnFragmentInteractionListener
+        TransferFragment.OnFragmentInteractionListener,ConfirmFragment.OnFragmentInteractionListener
 {
     lateinit var uid : String
     lateinit var email : String
@@ -97,5 +97,15 @@ class ContentHolder : AppCompatActivity(), HomeFragment.OnFragmentInteractionLis
 
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    override fun onFragmentInteraction(slotId: String, slotName: String) {
+            val ft = supportFragmentManager.beginTransaction()
+            ft.setCustomAnimations(android.R.anim.fade_in,android.R.anim.fade_out,android.R.anim.fade_in,
+                    android.R.anim.fade_out)
+            ft.replace(R.id.main_content, ConfirmFragment.newInstance(slotId, slotName)).addToBackStack(null)
+            ft.commit()
+            ft.addToBackStack(null);
+
     }
 }
