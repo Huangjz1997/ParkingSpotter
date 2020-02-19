@@ -63,7 +63,7 @@ class ConfirmFragment : Fragment() {
 
         val confirmButton: Button = view.findViewById(R.id.confirm_slot)
         confirmButton.setOnClickListener{
-            listener!!.onFragmentInteraction(2);
+            listener!!.onFragmentInteraction(4);
 
         }
 
@@ -71,7 +71,7 @@ class ConfirmFragment : Fragment() {
         denyButton.setOnClickListener{
             FirebaseFirestore.getInstance().collection("Tokens").add(Token(uid!!, email!!))
 
-            listener!!.onFragmentInteraction(2);
+            listener!!.onFragmentInteraction(4);
 
         }
 

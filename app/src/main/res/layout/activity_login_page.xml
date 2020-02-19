@@ -34,7 +34,7 @@
                 android:textColor="#ffffff"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Username"
+                android:text="User Email"
                 android:textSize="36sp"
                 ></TextView>
             <EditText

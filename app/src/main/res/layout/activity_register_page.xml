@@ -36,7 +36,7 @@
                 android:textColor="#ffffff"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Username"
+                android:text="User Email"
                 android:textSize="36sp"
                 ></TextView>
             <EditText
@@ -108,31 +108,7 @@
 
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="10dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            >
-            <TextView
-                android:textColor="#ffffff"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Email"
-                android:textSize="36sp"
-                ></TextView>
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="36sp"
-                android:background="@drawable/round_corner"
-                android:maxLines="1"
-                android:paddingLeft="5dp"
-                >
-            </EditText>
 
-        </LinearLayout>
 
         <Button
             android:layout_marginTop="30dp"
